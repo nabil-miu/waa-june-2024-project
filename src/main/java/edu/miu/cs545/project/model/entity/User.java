@@ -39,6 +39,8 @@ public class User {
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
+    @ManyToMany
+    private List<Interest> interests;
 
     @ManyToMany
     private List<Event> events;
