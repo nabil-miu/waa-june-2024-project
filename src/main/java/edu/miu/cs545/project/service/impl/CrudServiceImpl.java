@@ -1,5 +1,6 @@
-package edu.miu.cs545.project.service;
+package edu.miu.cs545.project.service.impl;
 
+import edu.miu.cs545.project.service.CrudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.ListCrudRepository;
 

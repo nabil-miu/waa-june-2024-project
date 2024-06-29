@@ -1,12 +1,12 @@
 package edu.miu.cs545.project.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import edu.miu.cs545.project.model.UserType;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -28,6 +28,12 @@ public class User {
     private String zip;
     private String country;
     private String role;
+    private String studentId;
+    private String major;
+    private LocalDate academicYear;
+    private String department;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
     private boolean enabled;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
