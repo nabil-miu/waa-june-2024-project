@@ -1,6 +1,6 @@
 package edu.miu.cs545.project.controller;
 
-import edu.miu.cs545.project.service.CrudService;
+import edu.miu.cs545.project.service.util.CrudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
