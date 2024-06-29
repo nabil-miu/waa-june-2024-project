@@ -1,4 +1,4 @@
-package edu.miu.cs545.project.service.util;
+package edu.miu.cs545.project.service;
 
 import java.util.List;
 import java.util.Optional;
