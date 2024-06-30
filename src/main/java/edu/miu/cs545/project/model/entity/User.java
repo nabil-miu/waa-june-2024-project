@@ -47,4 +47,7 @@ public class User {
 
     @ManyToMany
     private List<ExtracurricularActivity> activities;
+
+    @OneToOne
+    private Profile profile;
 }

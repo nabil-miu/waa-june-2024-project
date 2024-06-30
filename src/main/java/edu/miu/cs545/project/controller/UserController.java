@@ -1,7 +1,7 @@
 package edu.miu.cs545.project.controller;
 
 import edu.miu.cs545.project.model.entity.User;
-import edu.miu.cs545.project.service.impl.UserServiceImpl;
+import edu.miu.cs545.project.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Users", description = "Users API")
 public class UserController extends CrudController<User, Long> {
 
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserService userService) {
         super(userService);
     }
 }

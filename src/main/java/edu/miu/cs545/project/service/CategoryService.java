@@ -1,4 +1,6 @@
 package edu.miu.cs545.project.service;
 
-public interface CategoryService {
+import edu.miu.cs545.project.model.entity.Category;
+
+public interface CategoryService extends CrudService<Category, Long>{
 }
