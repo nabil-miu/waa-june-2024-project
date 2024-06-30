@@ -1,10 +1,15 @@
 package edu.miu.cs545.project.storage;
 
+import ch.qos.logback.core.util.StringUtil;
+import edu.miu.cs545.project.model.entity.AcademicResource;
+import edu.miu.cs545.project.repository.ResourceRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -20,6 +25,9 @@ import java.util.stream.Stream;
 public class FileSystemStorageService implements StorageService {
 
     private final Path rootLocation;
+
+    @Autowired
+    private ResourceRepo resourceRepo;
 
     @Autowired
     public FileSystemStorageService(StorageProperties properties) {
@@ -40,6 +48,7 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public void store(MultipartFile file) {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file.");
@@ -56,6 +65,17 @@ public class FileSystemStorageService implements StorageService {
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
             }
+
+            if (fileName.contains("..")) {
+                throw new StorageException("Filename contains invalid path sequence " + fileName);
+            }
+            if (file.getBytes().length > (1024 * 1024)) {
+                throw new StorageException("File size exceeds maximum limit");
+            }
+            AcademicResource resource = new AcademicResource();
+            resource.setName(fileName);
+            resource.setUrl(destinationFile.toString());
+            resourceRepo.save(resource);
         } catch (IOException e) {
             throw new StorageException("Failed to store file.", e);
         }
@@ -95,5 +115,6 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
+        resourceRepo.deleteAll();
     }
 }

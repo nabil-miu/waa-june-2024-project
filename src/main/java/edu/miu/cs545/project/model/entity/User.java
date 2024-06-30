@@ -48,4 +48,7 @@ public class User {
     @ManyToMany
     private List<ExtracurricularActivity> activities;
 
+    @OneToMany(mappedBy = "user")
+    private List<AcademicResource> academicResources;
+
 }
