@@ -20,6 +20,7 @@ public class SurveyResponse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Long id;
+    private String answer;
     @OneToOne
     private SurveyQuestion surveyQuestion;
     @ManyToOne
