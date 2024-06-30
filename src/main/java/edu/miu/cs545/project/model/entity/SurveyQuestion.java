@@ -12,6 +12,7 @@ public class SurveyQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Lob
     private String question;
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
