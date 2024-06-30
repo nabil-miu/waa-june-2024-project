@@ -1,4 +1,6 @@
 package edu.miu.cs545.project.service;
 
-public interface SurveyService {
+import edu.miu.cs545.project.model.entity.Survey;
+
+public interface SurveyService extends CrudService<Survey, Long>{
 }
