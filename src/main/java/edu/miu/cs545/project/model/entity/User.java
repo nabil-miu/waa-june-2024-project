@@ -50,4 +50,7 @@ public class User {
 
     @OneToMany(mappedBy = "users")
     private List<SurveyResponse> responses;
+
+    @OneToOne
+    private Profile profile;
 }
