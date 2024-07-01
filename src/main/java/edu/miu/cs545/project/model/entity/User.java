@@ -56,4 +56,8 @@ public class User {
 
     @OneToOne
     private Profile profile;
+
+    @OneToMany(mappedBy = "user")
+    private List<AcademicResource> academicResources;
+
 }
