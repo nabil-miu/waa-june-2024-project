@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/survey-responses")
 @Tag(name = "Survey Responses", description = "Survey Response API")
 public class SurveyResponseController extends CrudController<SurveyResponse,Long>{
-    public SurveyResponseController(SurveyResponseImpl Service) {
+    public SurveyResponseController(SurveyResponse Service) {
         super(Service);
     }
 }
