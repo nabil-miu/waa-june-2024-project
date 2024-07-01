@@ -1,6 +1,5 @@
 package edu.miu.cs545.project.controller;
 
-import edu.miu.cs545.project.exception.StorageFileNotFoundException;
 import edu.miu.cs545.project.service.StorageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1/resource")
@@ -32,19 +33,7 @@ public class FileUploadController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
-//    @PostMapping("/upload")
-//    public ResponseEntity<Map<String, String>> handleFileUpload(@RequestParam("file") MultipartFile file) {
-//        Map<String, String> response = new HashMap<>();
-//
-//        response.put("fileName", file.getOriginalFilename());
-//        response.put("fileSize", String.valueOf(file.getSize()));
-//        response.put("contentType", file.getContentType());
-//
-//        response.put("message", "File upload done");
-//        return ResponseEntity.ok(response);
-//    }
-
-    @PostMapping("/")
+    @PostMapping
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes, @RequestParam Long userId) {
 
@@ -55,14 +44,10 @@ public class FileUploadController {
         return "redirect:/";
     }
 
-    @ExceptionHandler(StorageFileNotFoundException.class)
-    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
-        return ResponseEntity.notFound().build();
+    @DeleteMapping("/files/{filename:.+}")
+    public ResponseEntity<Void> delete(@PathVariable String filename) throws IOException {
+        storageService.delete(filename);
+        return ResponseEntity.noContent().build();
     }
 
-//    @PostMapping("/single/upload")
-//    public ResponseEntity<String> fileUploading(@RequestParam("file") MultipartFile file) {
-//        // Code to save the file to a database or disk
-//        return ResponseEntity.ok("Successfully uploaded the file");
-//    }
 }

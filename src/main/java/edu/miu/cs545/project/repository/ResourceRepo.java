@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ResourceRepo extends ListCrudRepository<AcademicResource, Long> {
+    void deleteAcademicResourceByName(String filename);
 }

@@ -7,12 +7,13 @@ import edu.miu.cs545.project.service.StorageService;
 import edu.miu.cs545.project.exception.StorageException;
 import edu.miu.cs545.project.exception.StorageFileNotFoundException;
 import edu.miu.cs545.project.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,11 +24,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.stream.Stream;
 
 @Service
 public class StorageServiceImpl implements StorageService {
 
+    private static final Logger logger = LoggerFactory.getLogger(StorageServiceImpl.class);
     private final Path rootLocation;
 
     @Autowired
@@ -38,7 +39,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Autowired
     public StorageServiceImpl(@Value("${storage.location}") String location) {
-        if (location.length() == 0) {
+        if (location.isEmpty()) {
             throw new StorageException("File upload location can not be Empty.");
         }
         this.rootLocation = Paths.get(location);
@@ -91,17 +92,6 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public Stream<Path> loadAll() {
-        try {
-            return Files.walk(this.rootLocation, 1)
-                    .filter(path -> !path.equals(this.rootLocation))
-                    .map(this.rootLocation::relativize);
-        } catch (IOException e) {
-            throw new StorageException("Failed to read stored files ", e);
-        }
-    }
-
-    @Override
     public Path load(String filename) {
         return rootLocation.resolve(filename);
     }
@@ -122,8 +112,24 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public void deleteAll() {
-        FileSystemUtils.deleteRecursively(rootLocation.toFile());
-        resourceRepo.deleteAll();
+    public void delete(String filename) throws IOException {
+        try {
+            logger.info("Attempting to delete resource: {}", filename);
+            resourceRepo.deleteAcademicResourceByName(filename);
+            Path filePath = rootLocation.resolve(filename);
+            if (Files.exists(filePath)) {
+                logger.info("Deleting file at path: {}", filePath);
+                Files.delete(filePath);
+            } else {
+                logger.warn("File not found: {}", filePath);
+            }
+            logger.info("Resource deleted successfully: {}", filename);
+        } catch (IOException e) {
+            logger.error("Error deleting file: {}", filename, e);
+            throw e;
+        } catch (Exception e) {
+            logger.error("Error deleting resource from repository: {}", filename, e);
+            throw new IOException("Could not delete resource: " + filename, e);
+        }
     }
 }
