@@ -1,10 +1,14 @@
-package edu.miu.cs545.project.storage;
+package edu.miu.cs545.project.service.impl;
 
-import ch.qos.logback.core.util.StringUtil;
 import edu.miu.cs545.project.model.entity.AcademicResource;
+import edu.miu.cs545.project.model.entity.User;
 import edu.miu.cs545.project.repository.ResourceRepo;
-import lombok.AllArgsConstructor;
+import edu.miu.cs545.project.service.StorageService;
+import edu.miu.cs545.project.exception.StorageException;
+import edu.miu.cs545.project.exception.StorageFileNotFoundException;
+import edu.miu.cs545.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -22,7 +26,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 
 @Service
-public class FileSystemStorageService implements StorageService {
+public class StorageServiceImpl implements StorageService {
 
     private final Path rootLocation;
 
@@ -30,11 +34,14 @@ public class FileSystemStorageService implements StorageService {
     private ResourceRepo resourceRepo;
 
     @Autowired
-    public FileSystemStorageService(StorageProperties properties) {
-        if (properties.getLocation().trim().length() == 0) {
+    private UserService userService;
+
+    @Autowired
+    public StorageServiceImpl(@Value("${storage.location}") String location) {
+        if (location.length() == 0) {
             throw new StorageException("File upload location can not be Empty.");
         }
-        this.rootLocation = Paths.get(properties.getLocation());
+        this.rootLocation = Paths.get(location);
     }
 
     @Override
@@ -47,7 +54,7 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public void store(MultipartFile file) {
+    public void store(MultipartFile file, Long userId) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             if (file.isEmpty()) {
@@ -73,8 +80,10 @@ public class FileSystemStorageService implements StorageService {
                 throw new StorageException("File size exceeds maximum limit");
             }
             AcademicResource resource = new AcademicResource();
+            User user = userService.getById(userId).orElseThrow();
             resource.setName(fileName);
             resource.setUrl(destinationFile.toString());
+            resource.setUser(user);
             resourceRepo.save(resource);
         } catch (IOException e) {
             throw new StorageException("Failed to store file.", e);

@@ -1,20 +1,15 @@
 package edu.miu.cs545.project.controller;
 
-import edu.miu.cs545.project.storage.StorageFileNotFoundException;
-import edu.miu.cs545.project.storage.StorageService;
+import edu.miu.cs545.project.exception.StorageFileNotFoundException;
+import edu.miu.cs545.project.service.StorageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.io.IOException;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/resource")
@@ -23,18 +18,6 @@ import java.util.stream.Collectors;
 public class FileUploadController {
 
     private final StorageService storageService;
-
-    // Looks up the current list of uploaded files
-    @GetMapping("/")
-    public String listUploadedFiles(Model model) throws IOException {
-
-        model.addAttribute("files", storageService.loadAll().map(
-                        path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
-                                "serveFile", path.getFileName().toString()).build().toUri().toString())
-                .collect(Collectors.toList()));
-
-        return "uploadForm";
-    }
 
     // Loads the resource (if it exists) and sends it to the browser to download
     @GetMapping("/files/{filename:.+}")
@@ -63,9 +46,9 @@ public class FileUploadController {
 
     @PostMapping("/")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
+                                   RedirectAttributes redirectAttributes, @RequestParam Long userId) {
 
-        storageService.store(file);
+        storageService.store(file, userId);
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 

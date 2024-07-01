@@ -1,4 +1,4 @@
-package edu.miu.cs545.project.storage;
+package edu.miu.cs545.project.exception;
 
 public class StorageFileNotFoundException extends StorageException {
 
