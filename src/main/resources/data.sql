@@ -11,9 +11,9 @@ VALUES (1, '2023-07-01 18:00:00', 'Conference Hall A, Springfield University', '
        (2, '2023-07-15 10:00:00', 'Auditorium B, Downtown Conference Center', 'Career Fair 2023',
         'A perfect place for students and professionals to meet potential employers.');
 INSERT INTO survey (created_at, expired_at, is_active, id, description, title)
-VALUES ('2023-06-30', NULL, true, 1, 'A survey to understand student satisfaction with campus facilities.',
+VALUES ('2023-06-30', '2024-07-30', true, 1, 'A survey to understand student satisfaction with campus facilities.',
         'Campus Satisfaction Survey 2023'),
-       ('2023-07-01', NULL, true, 2, 'A survey to gather feedback on the recent Tech Talk event.',
+       ('2023-07-01', '2024-07-3', true, 2, 'A survey to gather feedback on the recent Tech Talk event.',
         'Tech Talk Feedback 2023');
 INSERT INTO extracurricular_activity (id, name, description)
 VALUES (1, 'Robotics Club', 'A club for students interested in building and learning about robots.'),
