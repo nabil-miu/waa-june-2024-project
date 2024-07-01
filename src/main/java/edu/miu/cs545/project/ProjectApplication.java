@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootApplication
 @Tag(name = "Project", description = "Project API")
 public class ProjectApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(ProjectApplication.class, args);
     }
