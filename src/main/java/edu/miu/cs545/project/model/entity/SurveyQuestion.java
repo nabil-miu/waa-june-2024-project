@@ -16,6 +16,8 @@ public class SurveyQuestion {
     private String question;
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
+    @OneToOne
+    private SurveyResponse surveyResponse;
     @ManyToOne
     @JoinColumn(name = "survey_id")
     private Survey survey;
