@@ -51,6 +51,9 @@ public class User {
     @OneToMany(mappedBy = "users")
     private List<SurveyResponse> responses;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private StudentDirectory studentDirectory;
+
     @OneToOne
     private Profile profile;
 }
