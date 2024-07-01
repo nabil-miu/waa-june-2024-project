@@ -14,4 +14,5 @@ public class SurveyResponseImpl extends CrudServiceImpl<SurveyResponse,Long> imp
     public SurveyResponseImpl(SurveyResponseRepo repository) {
         super(repository);
     }
+
 }
