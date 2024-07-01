@@ -16,7 +16,16 @@ import java.util.Optional;
 
 public abstract class CrudController<T, ID> {
 
+    private final String GET_ALL = "getAll";
+    private final String GET_BY_ID = "getById";
+    private final String CREATE = "create";
+    private final String UPDATE = "update";
+    private final String DELETE = "delete";
+    private final String METHOD = "method";
+    private final String CLAZZ = getClass().getSimpleName();
+
     private final Logger logger = LoggerFactory.getLogger(getClass());
+
     private Counter counterGetAll;
     private Counter counterGetById;
     private Counter counterCreate;
@@ -28,18 +37,17 @@ public abstract class CrudController<T, ID> {
 
     public CrudController(CrudService crudService, MeterRegistry registry) {
         this.crudService = crudService;
-        this.counterGetAll = registry.counter(getClass().getSimpleName(), "method", "getAll");
-        this.counterGetById = registry.counter(getClass().getSimpleName(), "method", "getById");
-        this.counterCreate = registry.counter(getClass().getSimpleName(), "method", "create");
-        this.counterUpdate = registry.counter(getClass().getSimpleName(), "method", "update");
-        this.counterDelete = registry.counter(getClass().getSimpleName(), "method", "delete");
+        this.counterGetAll = registry.counter(CLAZZ, METHOD, GET_ALL);
+        this.counterGetById = registry.counter(CLAZZ, METHOD, GET_BY_ID);
+        this.counterCreate = registry.counter(CLAZZ, METHOD, CREATE);
+        this.counterUpdate = registry.counter(CLAZZ, METHOD, UPDATE);
+        this.counterDelete = registry.counter(CLAZZ, METHOD, DELETE);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<T>> getAll() throws NoSuchMethodException {
         counterGetAll.increment();
-
-        callLogger(getClass().getSimpleName(), getClass().getMethod("getAll", null));
+        callLogger(CLAZZ, getClass().getMethod(GET_ALL, null));
         List<T> entities = crudService.getAll();
         return ResponseEntity.ok().body(entities);
     }
@@ -47,7 +55,7 @@ public abstract class CrudController<T, ID> {
     @GetMapping("/{id}")
     public ResponseEntity<T> getById(@PathVariable ID id) throws NoSuchMethodException {
         counterGetById.increment();
-        callLogger(getClass().toString(), getClass().getMethod("getById", Object.class));
+        callLogger(CLAZZ, getClass().getMethod(GET_BY_ID, Long.class));
         Optional<T> optionalEntity = crudService.getById(id);
         return optionalEntity.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -56,7 +64,7 @@ public abstract class CrudController<T, ID> {
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody T entity) throws NoSuchMethodException {
         counterCreate.increment();
-        callLogger(getClass().getSimpleName(), getClass().getMethod("create", null));
+        callLogger(CLAZZ, getClass().getMethod(CREATE, Object.class));
         crudService.create(entity);
         URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
                 .path("/{id}")
@@ -68,7 +76,7 @@ public abstract class CrudController<T, ID> {
     @PutMapping("/{id}")
     public ResponseEntity<T> update(@PathVariable ID id, @RequestBody T entity) throws NoSuchMethodException {
         counterUpdate.increment();
-        callLogger(getClass().getSimpleName(), getClass().getMethod("update", null));
+        callLogger(CLAZZ, getClass().getMethod(UPDATE, Long.class, Object.class));
         crudService.update(id, entity);
         return ResponseEntity.ok(entity);
     }
@@ -76,9 +84,9 @@ public abstract class CrudController<T, ID> {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable ID id) throws NoSuchMethodException {
         counterDelete.increment();
-        callLogger(getClass().getSimpleName(), getClass().getMethod("delete", null));
+        callLogger(CLAZZ, getClass().getMethod(DELETE, Long.class));
         if (!crudService.existsById(id)) {
-            System.out.println("Not found");
+            logger.debug("Not found");
             return ResponseEntity.notFound().build();
         }
         crudService.delete(id);
