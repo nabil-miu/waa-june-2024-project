@@ -20,7 +20,11 @@ public class Survey {
     private String title;
     private String description;
     private LocalDate createdAt;
-
+    private LocalDate expiredAt;
+    private boolean isActive;
     @OneToMany(mappedBy = "survey")
     private List<SurveyQuestion> surveyQuestions;
+    @OneToMany
+    @JoinColumn(name = "survey_responses")
+    private List<SurveyResponse> surveyResponses;
 }
