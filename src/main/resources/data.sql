@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS `project` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE
+DATABASE IF NOT EXISTS `project` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 INSERT INTO profile (id, academic_achievements, personal_bio)
 VALUES (100, 'Bachelor of Science in Computer Science',
@@ -9,10 +10,11 @@ VALUES (1, '2023-07-01 18:00:00', 'Conference Hall A, Springfield University', '
         'An annual gathering of tech enthusiasts to discuss emerging technologies.'),
        (2, '2023-07-15 10:00:00', 'Auditorium B, Downtown Conference Center', 'Career Fair 2023',
         'A perfect place for students and professionals to meet potential employers.');
-INSERT INTO survey (created_at, id, description, title)
-VALUES ('2023-06-30', 1, 'A survey to understand student satisfaction with campus facilities.',
+INSERT INTO survey (created_at, expired_at, is_active, id, description, title)
+VALUES ('2023-06-30', NULL, true, 1, 'A survey to understand student satisfaction with campus facilities.',
         'Campus Satisfaction Survey 2023'),
-       ('2023-07-01', 2, 'A survey to gather feedback on the recent Tech Talk event.', 'Tech Talk Feedback 2023');
+       ('2023-07-01', NULL, true, 2, 'A survey to gather feedback on the recent Tech Talk event.',
+        'Tech Talk Feedback 2023');
 INSERT INTO extracurricular_activity (id, name, description)
 VALUES (1, 'Robotics Club', 'A club for students interested in building and learning about robots.'),
        (2, 'Art Society', 'A society that brings together students interested in the arts.');
