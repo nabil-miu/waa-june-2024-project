@@ -22,4 +22,8 @@ public class AcademicResource {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private ResourceCategory resourceCategory;
 }

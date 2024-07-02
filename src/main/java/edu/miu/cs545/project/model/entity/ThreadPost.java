@@ -20,7 +20,7 @@ public class ThreadPost {
     private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private  Category  category;
+    private ResourceCategory resourceCategory;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private  User user;
