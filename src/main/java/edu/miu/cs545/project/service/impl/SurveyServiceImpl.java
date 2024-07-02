@@ -14,11 +14,13 @@ import java.util.List;
 
 @Service
 public class SurveyServiceImpl extends CrudServiceImpl<Survey,Long> implements SurveyService {
-    @Autowired
-    private SurveyRepo surveyRepo;
+
+    private final SurveyRepo surveyRepo;
 
     public SurveyServiceImpl(SurveyRepo repository) {
+
         super(repository);
+        this.surveyRepo = repository;
     }
 
     public List<Survey> getAllActiveSurveys() {
