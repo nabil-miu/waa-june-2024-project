@@ -17,7 +17,7 @@ public class Interest {
     private Long id;
     private String name;
     @ManyToMany(mappedBy = "interests")
-    private List<User> users;
+    private List<Student> students;
     @Lob
     private String description;
 }

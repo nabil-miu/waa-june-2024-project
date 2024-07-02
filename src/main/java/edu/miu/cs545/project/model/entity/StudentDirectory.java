@@ -18,7 +18,7 @@ public class StudentDirectory {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Student student;
     private String contactInformation;
     private LocalDate academicYear;
     private String major;

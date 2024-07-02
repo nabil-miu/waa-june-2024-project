@@ -27,7 +27,7 @@ public class Event {
     private LocalDateTime localDateTime;
 
     @ManyToMany(mappedBy = "events")
-    private List<User> users;
+    private List<Student> students;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Rsvp> rsvpList;

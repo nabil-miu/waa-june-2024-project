@@ -1,5 +1,5 @@
 CREATE
-DATABASE IF NOT EXISTS `project` /*!40100 DEFAULT CHARACTER SET utf8 */;
+    DATABASE IF NOT EXISTS `project` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 INSERT INTO profile (id, academic_achievements, personal_bio)
 VALUES (100, 'Bachelor of Science in Computer Science',
@@ -21,34 +21,34 @@ VALUES (1, 'Robotics Club', 'A club for students interested in building and lear
 INSERT INTO interest (id, name, description)
 VALUES (1, 'Technology', 'Interest in technology and tech advancements.'),
        (2, 'Arts', 'Passionate about all forms of art.');
-
-INSERT INTO user (academic_year, account_non_expired, account_non_locked, credentials_non_expired, enabled,
-                  id, profile_id, address, city, country, department, email, first_name, last_name,
-                  major, password, phone, role, state, student_id, username, zip, user_type)
-VALUES ('2023-09-01', 1, 1, 1, 1,
-        1, 100, '123 Oak St.', 'Springfield', 'USA', 'Computer Science', 'john.doe@example.com', 'John', 'Doe',
-        'Software Engineering', 'hashed_password123', '555-1234', 'STUDENT', 'MA', 'S1234567', 'john.doe', '01101',
-        'STUDENT'),
-       ('2022-09-01', 1, 1, 1, 1,
-        2, 101, '456 Maple St.', 'Rivertown', 'USA', 'Arts', 'jane.smith@example.com', 'Jane', 'Smith',
-        'Fine Arts', 'hashed_password456', '555-5678', 'STUDENT', 'NY', 'S7654321', 'jane.smith', '02202', 'STUDENT');
+INSERT INTO user (id, academic_year, account_non_expired, account_non_locked, credentials_non_expired, active,
+                  profile_id,
+                  address, city, country, department, email, first_name, last_name,
+                  major, password, phone, role, state, student_id, zip, user_type)
+VALUES (1, '2023-09-01', 1, 1, 1, 1, 100, '123 Oak St.', 'Springfield', 'USA', 'Computer Science',
+        'john.doe@example.com',
+        'John', 'Doe',
+        'Software Engineering', 'hashed_password123', '555-1234', 'STUDENT', 'MA', 'S1234567', '01101', 'STUDENT'),
+       (2, '2022-09-01', 1, 1, 1, 1, 101, '456 Maple St.', 'Rivertown', 'USA', 'Arts', 'jane.smith@example.com', 'Jane',
+        'Smith',
+        'Fine Arts', 'hashed_password456', '555-5678', 'STUDENT', 'NY', 'S7654321', '02202', 'STUDENT');
 -- User Activities
-INSERT INTO user_activities (activities_id, users_id)
+INSERT INTO user_activities (activities_id, students_id)
 VALUES (1, 1),
        (2, 2);
 
 -- User Events
-INSERT INTO user_events (events_id, users_id)
+INSERT INTO user_events (events_id, students_id)
 VALUES (1, 1),
        (2, 2);
 
 -- User Interests
-INSERT INTO user_interests (interests_id, users_id)
+INSERT INTO user_interests (interests_id, students_id)
 VALUES (1, 1),
        (2, 2);
-INSERT INTO user_activities (activities_id, users_id)
+INSERT INTO user_activities (activities_id, students_id)
 VALUES (1, 1),
        (2, 2);
-INSERT INTO user_interests (interests_id, users_id)
+INSERT INTO user_interests (interests_id, students_id)
 VALUES (1, 1),
        (2, 2);
