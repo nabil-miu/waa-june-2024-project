@@ -14,14 +14,15 @@ import java.util.List;
 @RequestMapping("/api/v1/resources")
 @Tag(name = "AcademicResources", description = "Academic Resources API")
 public class AcademicResourceController extends CrudController<AcademicResource, Long> {
-    AcademicResourceService service;
+
+    private final AcademicResourceService service;
 
     public AcademicResourceController(AcademicResourceService service) {
         super(service);
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping("/category")
     public ResponseEntity<List<AcademicResource>> getResourcesByCategory(Long id) {
         List<AcademicResource> resources = service.getResourcesByCategoryId(id);
         return ResponseEntity.ok(resources);

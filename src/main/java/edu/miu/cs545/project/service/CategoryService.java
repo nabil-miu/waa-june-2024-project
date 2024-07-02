@@ -7,4 +7,5 @@ import java.util.List;
 public interface CategoryService extends CrudService<ResourceCategory, Long> {
 
     List<ResourceCategory> getRootCategoriesWithSubcategories();
+
 }
