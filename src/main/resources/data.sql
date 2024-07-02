@@ -32,6 +32,9 @@ VALUES ('2023-09-01', 1, 1, 1, 1,
        ('2022-09-01', 1, 1, 1, 1,
         2, 101, '456 Maple St.', 'Rivertown', 'USA', 'Arts', 'jane.smith@example.com', 'Jane', 'Smith',
         'Fine Arts', 'hashed_password456', '555-5678', 'STUDENT', 'NY', 'S7654321', 'jane.smith', '02202', 'STUDENT');
+INSERT INTO student_directory (user_id, contact_information, academic_year, major)
+VALUES (1, 'john.doe@example.com, 555-1234, 123 Oak St., Springfield, MA, 01101, USA', 2023, 'Software Engineering'),
+       (2, 'jane.smith@example.com, 555-5678, 456 Maple St., Rivertown, NY, 02202, USA', 2022, 'Fine Arts');
 -- User Activities
 INSERT INTO user_activities (activities_id, users_id)
 VALUES (1, 1),

@@ -29,5 +29,16 @@ public class StudentDirectoryServiceImpl extends CrudServiceImpl<StudentDirector
         return studentDirectoryRepo.findByAcademicYear(date);
     }
 
+    public Optional<List<StudentDirectory>> findByText(String tx) {
+        String text = tx.toLowerCase();
+        return studentDirectoryRepo.findByUser_FirstNameOrUser_LastNameOrUser_UsernameOrUserEmailOrUser_PhoneOrUser_AddressOrUser_CityOrUser_StateOrUser_ZipOrUser_CountryOrUser_Department(
+                text,text,text,text,text,text,text,text,text,text,text);
+    }
+
+    @Override
+    public List<StudentDirectory> findAll() {
+        return studentDirectoryRepo.findAll();
+    }
+
 
 }

@@ -12,4 +12,19 @@ import java.util.Optional;
 public interface StudentDirectoryRepo extends ListCrudRepository<StudentDirectory, Long> {
     Optional<List<StudentDirectory>> findByMajor(String major);
     Optional<List<StudentDirectory>> findByAcademicYear(int date);
+
+    Optional<List<StudentDirectory>> findByUser_FirstNameOrUser_LastNameOrUser_UsernameOrUserEmailOrUser_PhoneOrUser_AddressOrUser_CityOrUser_StateOrUser_ZipOrUser_CountryOrUser_Department(String firstName,
+                                                                                                                                                                                                           String lastName,
+                                                                                                                                                                                                           String email,
+                                                                                                                                                                                                           String username,
+                                                                                                                                                                                                           String phone,
+                                                                                                                                                                                                           String address,
+                                                                                                                                                                                                           String city,
+                                                                                                                                                                                                           String state,
+                                                                                                                                                                                                           String zip,
+                                                                                                                                                                                                           String country,
+                                                                                                                                                                                                           String department);
+
 }
+
+

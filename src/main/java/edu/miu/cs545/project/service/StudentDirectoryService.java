@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface StudentDirectoryService extends CrudService<StudentDirectory, Long> {
     Optional<List<StudentDirectory>> findByMajor(String major);
     Optional<List<StudentDirectory>> findByAcademicYear(int date);
+    Optional<List<StudentDirectory>> findByText(String text);
+   List<StudentDirectory> findAll();
 }

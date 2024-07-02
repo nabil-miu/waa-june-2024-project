@@ -1,5 +1,8 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.dto.StudentDirectoryDTO;
+import edu.miu.cs545.project.mapper.impl.StudentDirectoryMapper;
+import edu.miu.cs545.project.mapper.impl.UserDtoMapper;
 import edu.miu.cs545.project.model.entity.StudentDirectory;
 import edu.miu.cs545.project.service.StudentDirectoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,15 +23,28 @@ import java.util.Optional;
 public class SearchController {
     private final StudentDirectoryService studentDirectoryService;
 
-    @GetMapping("/majors")
-    public ResponseEntity<List<StudentDirectory>> searchByLastName(@PathVariable String major) {
+
+    @GetMapping("/major/{major}")
+    public ResponseEntity<List<StudentDirectoryDTO>> searchByMajor(@PathVariable String major) {
         Optional<List<StudentDirectory>> studentDirectories = studentDirectoryService.findByMajor(major);
-        return studentDirectories.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
-    }
-    @GetMapping("/academicyear")
-    public ResponseEntity<List<StudentDirectory>> searchByAcademicYear(@PathVariable int academicYear) {
-        Optional<List<StudentDirectory>> studentDirectories = studentDirectoryService.findByAcademicYear(academicYear);
-        return studentDirectories.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
+        return studentDirectories.map(directories ->
+                ResponseEntity.ok(StudentDirectoryMapper.toStudentDirectoryDTOList(directories))
+        ).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/academicyear/{academicyear}")
+    public ResponseEntity<List<StudentDirectoryDTO>> searchByAcademicYear(@PathVariable int academicyear) {
+        Optional<List<StudentDirectory>> studentDirectories = studentDirectoryService.findByAcademicYear(academicyear);
+        return studentDirectories.map(directories ->
+                ResponseEntity.ok(StudentDirectoryMapper.toStudentDirectoryDTOList(directories))
+        ).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/text/{text}")
+    public ResponseEntity<List<StudentDirectoryDTO>> searchByText(@PathVariable String text) {
+        Optional<List<StudentDirectory>> studentDirectories = studentDirectoryService.findByText(text);
+        return studentDirectories.map(directories ->
+                ResponseEntity.ok(StudentDirectoryMapper.toStudentDirectoryDTOList(directories))
+        ).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
