@@ -1,6 +1,7 @@
 package edu.miu.cs545.project.service.impl;
 
 import edu.miu.cs545.project.model.entity.AcademicResource;
+import edu.miu.cs545.project.model.entity.Student;
 import edu.miu.cs545.project.model.entity.User;
 import edu.miu.cs545.project.repository.ResourceRepo;
 import edu.miu.cs545.project.service.StorageService;
@@ -84,7 +85,7 @@ public class StorageServiceImpl implements StorageService {
             User user = userService.getById(userId).orElseThrow();
             resource.setName(fileName);
             resource.setUrl(destinationFile.toString());
-            resource.setUser(user);
+            resource.setStudent((Student) user);
             resourceRepo.save(resource);
         } catch (IOException e) {
             throw new StorageException("Failed to store file.", e);

@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface SurveyRepo extends ListCrudRepository<Survey, Long> {
-    List<Survey> findSurveyByExpiredAtAfter(LocalDate now);
+    List<Survey> findByExpiredAtAfter(LocalDate date);
 }

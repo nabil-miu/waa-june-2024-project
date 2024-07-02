@@ -20,6 +20,6 @@ public class AcademicResource {
     private String url;
 
     @ManyToOne
-    @JoinColumn
-    private User user;
+    @JoinColumn(name = "user_id")
+    private Student student;
 }

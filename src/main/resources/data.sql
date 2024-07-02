@@ -1,5 +1,5 @@
 CREATE
-DATABASE IF NOT EXISTS `project` /*!40100 DEFAULT CHARACTER SET utf8 */;
+    DATABASE IF NOT EXISTS `project` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 INSERT INTO profile (id, academic_achievements, personal_bio)
 VALUES (100, 'Bachelor of Science in Computer Science',
@@ -11,9 +11,9 @@ VALUES (1, '2023-07-01 18:00:00', 'Conference Hall A, Springfield University', '
        (2, '2023-07-15 10:00:00', 'Auditorium B, Downtown Conference Center', 'Career Fair 2023',
         'A perfect place for students and professionals to meet potential employers.');
 INSERT INTO survey (created_at, expired_at, is_active, id, description, title)
-VALUES ('2023-06-30', '2024-07-30', true, 1, 'A survey to understand student satisfaction with campus facilities.',
+VALUES ('2023-06-30', NULL, true, 1, 'A survey to understand student satisfaction with campus facilities.',
         'Campus Satisfaction Survey 2023'),
-       ('2023-07-01', '2024-07-3', true, 2, 'A survey to gather feedback on the recent Tech Talk event.',
+       ('2023-07-01', NULL, true, 2, 'A survey to gather feedback on the recent Tech Talk event.',
         'Tech Talk Feedback 2023');
 INSERT INTO extracurricular_activity (id, name, description)
 VALUES (1, 'Robotics Club', 'A club for students interested in building and learning about robots.'),
@@ -21,37 +21,34 @@ VALUES (1, 'Robotics Club', 'A club for students interested in building and lear
 INSERT INTO interest (id, name, description)
 VALUES (1, 'Technology', 'Interest in technology and tech advancements.'),
        (2, 'Arts', 'Passionate about all forms of art.');
-
-INSERT INTO user (academic_year, account_non_expired, account_non_locked, credentials_non_expired, enabled,
-                  id, profile_id, address, city, country, department, email, first_name, last_name,
-                  major, password, phone, role, state, student_id, username, zip, user_type)
-VALUES ('2023-09-01', 1, 1, 1, 1,
-        1, 100, '123 Oak St.', 'Springfield', 'USA', 'Computer Science', 'john.doe@example.com', 'John', 'Doe',
-        'Software Engineering', 'hashed_password123', '555-1234', 'STUDENT', 'MA', 'S1234567', 'john.doe', '01101',
-        'STUDENT'),
-       ('2022-09-01', 1, 1, 1, 1,
-        2, 101, '456 Maple St.', 'Rivertown', 'USA', 'Arts', 'jane.smith@example.com', 'Jane', 'Smith',
-        'Fine Arts', 'hashed_password456', '555-5678', 'STUDENT', 'NY', 'S7654321', 'jane.smith', '02202', 'STUDENT');
-INSERT INTO student_directory (user_id, contact_information, academic_year, major)
-VALUES (1, 'john.doe@example.com, 555-1234, 123 Oak St., Springfield, MA, 01101, USA', '2024-06-30', 'Software Engineering'),
-       (2, 'jane.smith@example.com, 555-5678, 456 Maple St., Rivertown, NY, 02202, USA', '2023-06-30', 'Fine Arts');
+INSERT INTO user (id, academic_year, account_non_expired, account_non_locked, credentials_non_expired, active,
+                  profile_id,
+                  address, city, country, department, email, first_name, last_name,
+                  major, password, phone, role, state, student_id, zip, user_type)
+VALUES (1, '2023-09-01', 1, 1, 1, 1, 100, '123 Oak St.', 'Springfield', 'USA', 'Computer Science',
+        'john.doe@example.com',
+        'John', 'Doe',
+        'Software Engineering', 'hashed_password123', '555-1234', 'STUDENT', 'MA', 'S1234567', '01101', 'STUDENT'),
+       (2, '2022-09-01', 1, 1, 1, 1, 101, '456 Maple St.', 'Rivertown', 'USA', 'Arts', 'jane.smith@example.com', 'Jane',
+        'Smith',
+        'Fine Arts', 'hashed_password456', '555-5678', 'STUDENT', 'NY', 'S7654321', '02202', 'STUDENT');
 -- User Activities
-INSERT INTO user_activities (activities_id, users_id)
+INSERT INTO user_activities (activities_id, students_id)
 VALUES (1, 1),
        (2, 2);
 
 -- User Events
-INSERT INTO user_events (events_id, users_id)
+INSERT INTO user_events (events_id, students_id)
 VALUES (1, 1),
        (2, 2);
 
 -- User Interests
-INSERT INTO user_interests (interests_id, users_id)
+INSERT INTO user_interests (interests_id, students_id)
 VALUES (1, 1),
        (2, 2);
-INSERT INTO user_activities (activities_id, users_id)
+INSERT INTO user_activities (activities_id, students_id)
 VALUES (1, 1),
        (2, 2);
-INSERT INTO user_interests (interests_id, users_id)
+INSERT INTO user_interests (interests_id, students_id)
 VALUES (1, 1),
        (2, 2);
