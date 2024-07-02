@@ -20,6 +20,6 @@ public class StudentDirectory {
     @JoinColumn(name = "user_id")
     private User user;
     private String contactInformation;
-    private LocalDate academicYear;
+    private int academicYear;
     private String major;
 }

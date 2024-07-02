@@ -25,5 +25,10 @@ public class SearchController {
         Optional<List<StudentDirectory>> studentDirectories = studentDirectoryService.findByMajor(major);
         return studentDirectories.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
     }
+    @GetMapping("/academicyear")
+    public ResponseEntity<List<StudentDirectory>> searchByAcademicYear(@PathVariable int academicYear) {
+        Optional<List<StudentDirectory>> studentDirectories = studentDirectoryService.findByAcademicYear(academicYear);
+        return studentDirectories.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
+    }
 
 }

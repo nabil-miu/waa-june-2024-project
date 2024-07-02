@@ -25,8 +25,9 @@ public class StudentDirectoryServiceImpl extends CrudServiceImpl<StudentDirector
     }
 
     @Override
-    public Optional<List<StudentDirectory>> findByAcademicYear(LocalDate date) {
+    public Optional<List<StudentDirectory>> findByAcademicYear(int date) {
         return studentDirectoryRepo.findByAcademicYear(date);
     }
+
 
 }

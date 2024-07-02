@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 public interface StudentDirectoryRepo extends ListCrudRepository<StudentDirectory, Long> {
     Optional<List<StudentDirectory>> findByMajor(String major);
-    Optional<List<StudentDirectory>> findByAcademicYear(LocalDate date);
+    Optional<List<StudentDirectory>> findByAcademicYear(int date);
 }
