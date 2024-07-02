@@ -56,4 +56,14 @@ public class User {
 
     @OneToOne
     private Profile profile;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<AcademicResource> academicResources;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Rsvp> rsvpList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Attendance> attendances;
+
 }
