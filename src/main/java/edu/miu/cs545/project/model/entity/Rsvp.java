@@ -24,7 +24,7 @@ public class Rsvp {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "event_id")

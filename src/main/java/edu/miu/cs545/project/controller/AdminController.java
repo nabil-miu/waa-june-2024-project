@@ -23,4 +23,8 @@ public class AdminController extends CrudController<User, Long>{
         adminService.deactivateUser(id);
         return ResponseEntity.ok().build();
     }
+
+    //TODO: add get reports by user id
+    //TODO: get all reports
+    //TODO: get report by id
 }

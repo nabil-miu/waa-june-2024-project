@@ -5,8 +5,6 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 
-import java.util.List;
-
 
 //Response ID
 //Question ID (FK)
@@ -23,6 +21,6 @@ public class SurveyResponse {
     private String answer;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User users;
+    private Student student;
 
 }

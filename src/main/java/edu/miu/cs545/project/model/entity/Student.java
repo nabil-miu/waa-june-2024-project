@@ -10,8 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "user_type")
+@DiscriminatorValue(value = "STUDENT")
 public class Student extends User {
     private String studentId;
     private LocalDate academicYear;
@@ -26,21 +25,21 @@ public class Student extends User {
     @ManyToMany
     private List<ExtracurricularActivity> activities;
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "student")
     private List<SurveyResponse> responses;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     private StudentDirectory studentDirectory;
 
     @OneToOne
     private Profile profile;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<AcademicResource> academicResources;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Rsvp> rsvpList;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Attendance> attendances;
 }

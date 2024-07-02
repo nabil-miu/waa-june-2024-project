@@ -1,22 +1,20 @@
 package edu.miu.cs545.project.model.entity;
 
-import edu.miu.cs545.project.model.UserType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Long id;
-    private String username;
     private String password;
     private String email;
     private String firstName;
@@ -28,8 +26,6 @@ public class User {
     private String zip;
     private String country;
     private String role;
-    @Enumerated(EnumType.STRING)
-    private UserType userType;
     private boolean active;
     private boolean accountNonExpired;
     private boolean accountNonLocked;

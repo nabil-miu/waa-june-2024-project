@@ -23,7 +23,7 @@ public class Attendance {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Student student;
 
     @Enumerated(EnumType.STRING)
     private AttendanceType status;
