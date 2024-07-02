@@ -3,42 +3,57 @@ package edu.miu.cs545.project.service.impl;
 import edu.miu.cs545.project.model.entity.StudentDirectory;
 import edu.miu.cs545.project.repository.StudentDirectoryRepo;
 import edu.miu.cs545.project.service.StudentDirectoryService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class StudentDirectoryServiceImpl extends CrudServiceImpl<StudentDirectory, Long> implements StudentDirectoryService {
 
-    @Autowired
-    private StudentDirectoryRepo studentDirectoryRepo;
+
+    @PersistenceContext
+    private EntityManager em;
 
     public StudentDirectoryServiceImpl(StudentDirectoryRepo repository) {
+
         super(repository);
+
     }
 
-    public Optional<List<StudentDirectory>> findByMajor(String major) {
-        return studentDirectoryRepo.findByMajor(major);
-    }
+    public List<StudentDirectory> findByAcademicYearAndMajorAndOtherFilters(LocalDate academicYear, String major, String otherFilter) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<StudentDirectory> cq = cb.createQuery(StudentDirectory.class);
 
-    @Override
-    public Optional<List<StudentDirectory>> findByAcademicYear(int date) {
-        return studentDirectoryRepo.findByAcademicYear(date);
-    }
+        Root<StudentDirectory> studentDirectory = cq.from(StudentDirectory.class);
+        List<Predicate> predicates = new ArrayList<>();
 
-    public Optional<List<StudentDirectory>> findByText(String tx) {
-        String text = tx.toLowerCase();
-        return studentDirectoryRepo.findByUser_FirstNameOrUser_LastNameOrUser_UsernameOrUserEmailOrUser_PhoneOrUser_AddressOrUser_CityOrUser_StateOrUser_ZipOrUser_CountryOrUser_Department(
-                text,text,text,text,text,text,text,text,text,text,text);
-    }
+        if (academicYear != null) {
+            predicates.add(cb.equal(studentDirectory.get("academicYear"), academicYear));
+        }
 
-    @Override
-    public List<StudentDirectory> findAll() {
-        return studentDirectoryRepo.findAll();
-    }
+        if (major != null && !major.isEmpty()) {
+            predicates.add(cb.equal(cb.lower(studentDirectory.get("major")), major.toLowerCase()));
+        }
 
+        if (otherFilter != null && !otherFilter.isEmpty()) {
+            predicates.add(cb.like(cb.lower(studentDirectory.get("contactInformation")), "%" + otherFilter.toLowerCase() + "%"));
+        }
+
+        cq.where(predicates.toArray(new Predicate[0]));
+
+        TypedQuery<StudentDirectory> query = em.createQuery(cq);
+        return query.getResultList();
+    }
 
 }
