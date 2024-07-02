@@ -6,7 +6,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -29,41 +28,10 @@ public class User {
     private String zip;
     private String country;
     private String role;
-    private String studentId;
-    private String major;
-    private LocalDate academicYear;
-    private String department;
     @Enumerated(EnumType.STRING)
     private UserType userType;
-    private boolean enabled;
+    private boolean active;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
-    @ManyToMany
-    private List<Interest> interests;
-
-    @ManyToMany
-    private List<Event> events;
-
-    @ManyToMany
-    private List<ExtracurricularActivity> activities;
-
-    @OneToMany(mappedBy = "users")
-    private List<SurveyResponse> responses;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private StudentDirectory studentDirectory;
-
-    @OneToOne
-    private Profile profile;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<AcademicResource> academicResources;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Rsvp> rsvpList;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Attendance> attendances;
-
 }
