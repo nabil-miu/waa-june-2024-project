@@ -5,9 +5,11 @@ import edu.miu.cs545.project.model.entity.ResourceCategory;
 import edu.miu.cs545.project.repository.ResourceRepo;
 import edu.miu.cs545.project.service.AcademicResourceService;
 import edu.miu.cs545.project.service.CategoryService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AcademicResourceServiceImpl extends CrudServiceImpl<AcademicResource, Long> implements AcademicResourceService {
 
     private final ResourceRepo resourceRepo;
