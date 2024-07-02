@@ -1,6 +1,5 @@
 package edu.miu.cs545.project.controller;
 
-import edu.miu.cs545.project.model.entity.Event;
 import edu.miu.cs545.project.model.entity.Rsvp;
 import edu.miu.cs545.project.service.RsvpService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,8 +24,8 @@ public class RsvpController extends CrudController<Rsvp, Long> {
     }
 
     @GetMapping("/event")
-    public ResponseEntity<List<Rsvp>> getAllRsvpsByEvent(@RequestParam Event event) {
-        List<Rsvp> rsvpList = service.getAllRsvpsByEvent(event);
+    public ResponseEntity<List<Rsvp>> getAllRsvpsByEvent(@RequestParam Long eventId) {
+        List<Rsvp> rsvpList = service.getAllRsvpsByEvent(eventId);
         return ResponseEntity.ok(rsvpList);
     }
 }
