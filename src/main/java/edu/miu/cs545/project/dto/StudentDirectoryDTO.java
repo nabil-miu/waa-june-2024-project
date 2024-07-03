@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Setter
 public class StudentDirectoryDTO {
     private Long id;
-    private UserDTO user;
+    private StudentDTO studentDTO;
     private String contactInformation;
     private LocalDate academicYear;
     private String major;

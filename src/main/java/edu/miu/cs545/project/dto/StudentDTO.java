@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Data
-public class UserDTO {
+public class StudentDTO {
     private Long id;
     private String username;
     private String email;
@@ -20,5 +20,5 @@ public class UserDTO {
     private String studentId;
     private String major;
     private int academicYear;
-
+    private String department;
 }

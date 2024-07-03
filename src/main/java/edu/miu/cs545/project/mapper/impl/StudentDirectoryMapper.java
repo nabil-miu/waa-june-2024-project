@@ -13,7 +13,7 @@ public class StudentDirectoryMapper {
         }
         StudentDirectoryDTO studentDirectoryDTO = new StudentDirectoryDTO();
         studentDirectoryDTO.setId(studentDirectory.getId());
-        studentDirectoryDTO.setUser(UserDtoMapper.toUserDTO(studentDirectory.getUser()));
+        studentDirectoryDTO.setStudentDTO(StudentDtoMapper.toUserDTO(studentDirectory.getStudent()));
         studentDirectoryDTO.setContactInformation(studentDirectory.getContactInformation());
         studentDirectoryDTO.setAcademicYear(studentDirectory.getAcademicYear());
         studentDirectoryDTO.setMajor(studentDirectory.getMajor());
@@ -25,7 +25,7 @@ public class StudentDirectoryMapper {
             return null;
         }
         StudentDirectory studentDirectory = new StudentDirectory();
-        studentDirectory.setUser(UserDtoMapper.toUser(studentDirectoryDTO.getUser()));
+        studentDirectory.setStudent(StudentDtoMapper.toStudent(studentDirectoryDTO.getStudentDTO()));
         studentDirectory.setContactInformation(studentDirectoryDTO.getContactInformation());
         studentDirectory.setAcademicYear(studentDirectoryDTO.getAcademicYear());
         studentDirectory.setMajor(studentDirectoryDTO.getMajor());
