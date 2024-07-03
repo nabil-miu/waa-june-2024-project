@@ -21,7 +21,7 @@ public class AcademicResource {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
