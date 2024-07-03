@@ -14,7 +14,7 @@ public class Profile {
     @Setter(AccessLevel.NONE)
     private Long Id;
     @OneToOne(mappedBy = "profile")
-    private User user;
+    private Student student;
     private String academicAchievements;
     @Lob
     private String personalBio;

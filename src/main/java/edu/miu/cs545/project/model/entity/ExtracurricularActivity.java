@@ -17,7 +17,7 @@ public class ExtracurricularActivity {
     private Long id;
     private String name;
     @ManyToMany(mappedBy = "activities")
-    private List<User> users;
+    private List<Student> students;
     @Lob
     private String description;
 }
