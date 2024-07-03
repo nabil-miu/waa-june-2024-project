@@ -30,4 +30,5 @@ public class PostController extends CrudController<Post,Long>{
         if(null == size) size = 10;
         return postService.findPostByThread(id,page,size,sortDirection);
     }
+    
 }
