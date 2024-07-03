@@ -6,11 +6,6 @@ import lombok.Data;
 import lombok.Setter;
 
 
-//Response ID
-//Question ID (FK)
-//User ID (FK)
-//Answer
-
 @Entity
 @Data
 public class SurveyResponse {
