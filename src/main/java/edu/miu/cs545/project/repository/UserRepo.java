@@ -9,6 +9,6 @@ import java.awt.print.Pageable;
 import java.util.List;
 
 @Repository
-public interface UserRepo extends ListCrudRepository<User, Long>, PagingAndSortingRepository<User,Long> {
-   // List<User> findAll(Pageable page);
+public interface UserRepo extends ListCrudRepository<User, Long>{
+
 }

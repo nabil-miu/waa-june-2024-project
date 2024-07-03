@@ -23,8 +23,5 @@ public class UserController extends CrudController<User, Long> {
         this.userService = userService;
     }
 
-    public ResponseEntity<Page<User>> getUserByPage(@RequestParam int pageSize){
-        Page<User> userPage = userService.getUsersByPage(pageSize);
-        return null;
-    }
+
 }

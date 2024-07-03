@@ -13,17 +13,12 @@ import java.util.List;
 @Service
 public class UserServiceImpl extends CrudServiceImpl<User, Long> implements UserService {
 
-    private final UserRepo repository;
 
     public UserServiceImpl(UserRepo repository) {
         super(repository);
-        this.repository = repository;
+
 
     }
 
-    public Page<User> getUsersByPage(int pageSize) {
-        PageRequest firstPageWithTwoElements = PageRequest.of(0, pageSize);
-       Page<User> userByPage = repository.findAll(firstPageWithTwoElements);
-       return userByPage;
-    }
+
 }
