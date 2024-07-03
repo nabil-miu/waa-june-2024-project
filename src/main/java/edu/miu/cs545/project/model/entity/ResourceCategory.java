@@ -27,6 +27,7 @@ public class ResourceCategory {
     @JoinColumn(name = "parent_id")
     private ResourceCategory parent;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ResourceCategory> categoryList;
 }
