@@ -1,7 +1,7 @@
 package edu.miu.cs545.project.util;
 
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,14 +16,19 @@ import java.util.Map;
 @ControllerAdvice
 public class ValidationExceptionHandler extends ResponseEntityExceptionHandler {
 
+    public ValidationExceptionHandler() {
+        super();
+    }
+
+    @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException exception,
-            HttpHeaders httpHeaders, HttpStatus httpStatus,
+            HttpHeaders httpHeaders, HttpStatusCode httpStatusCode,
             WebRequest webRequest){
 
         Map<String, Object> objectBody = new LinkedHashMap<>();
         objectBody.put("Current Timestamp", new Date());
-        objectBody.put("Status", httpStatus.value());
+        objectBody.put("Status", httpStatusCode.value());
 
         // Get all errors
         List<String> exceptionalErrors
@@ -34,7 +39,7 @@ public class ValidationExceptionHandler extends ResponseEntityExceptionHandler {
 
         objectBody.put("Errors", exceptionalErrors);
 
-        return new ResponseEntity<>(objectBody, httpStatus);
+        return new ResponseEntity<>(objectBody, httpStatusCode);
     }
 }
 
