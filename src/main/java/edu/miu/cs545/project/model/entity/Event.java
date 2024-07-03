@@ -1,6 +1,7 @@
 package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -27,11 +28,14 @@ public class Event {
     private LocalDateTime localDateTime;
 
     @ManyToMany(mappedBy = "events")
+    @Valid
     private List<Student> students;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @Valid
     private List<Rsvp> rsvpList;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @Valid
     private List<Attendance> attendances;
 }

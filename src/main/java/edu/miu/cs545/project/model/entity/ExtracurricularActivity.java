@@ -1,6 +1,7 @@
 package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class ExtracurricularActivity {
     private Long id;
     private String name;
     @ManyToMany(mappedBy = "activities")
+    @Valid
     private List<Student> students;
     @Lob
     private String description;

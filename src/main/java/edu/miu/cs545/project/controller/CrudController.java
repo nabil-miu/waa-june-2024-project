@@ -1,6 +1,7 @@
 package edu.miu.cs545.project.controller;
 
 import edu.miu.cs545.project.service.CrudService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public abstract class CrudController<T, ID> {
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody T entity) {
+    public ResponseEntity<Void> create(@Valid @RequestBody T entity) {
         crudService.create(entity);
         URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
                 .path("/{id}")
@@ -40,7 +41,7 @@ public abstract class CrudController<T, ID> {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<T> update(@PathVariable ID id, @RequestBody T entity) {
+    public ResponseEntity<T> update(@PathVariable ID id, @Valid @RequestBody T entity) {
         crudService.update(id, entity);
         return ResponseEntity.ok(entity);
     }
@@ -63,4 +64,5 @@ public abstract class CrudController<T, ID> {
             throw new IllegalArgumentException("Failed to get ID from entity", e);
         }
     }
+
 }

@@ -1,6 +1,7 @@
 package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @DiscriminatorValue(value = "STUDENT")
 public class Student extends User {
+    @NotBlank(message = "Student id required")
     private String studentId;
     private LocalDate academicYear;
     private String department;
