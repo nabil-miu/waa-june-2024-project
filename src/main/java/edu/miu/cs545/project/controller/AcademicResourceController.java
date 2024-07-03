@@ -5,6 +5,7 @@ import edu.miu.cs545.project.service.AcademicResourceService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,8 +23,8 @@ public class AcademicResourceController extends CrudController<AcademicResource,
         this.service = service;
     }
 
-    @GetMapping("/category")
-    public ResponseEntity<List<AcademicResource>> getResourcesByCategory(Long id) {
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<AcademicResource>> getResourcesByCategory(@PathVariable Long id) {
         List<AcademicResource> resources = service.getResourcesByCategoryId(id);
         return ResponseEntity.ok(resources);
     }
