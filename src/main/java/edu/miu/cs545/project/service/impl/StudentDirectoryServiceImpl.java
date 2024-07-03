@@ -11,6 +11,8 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,14 +23,14 @@ import java.util.Optional;
 @Service
 public class StudentDirectoryServiceImpl extends CrudServiceImpl<StudentDirectory, Long> implements StudentDirectoryService {
 
-
+    private final StudentDirectoryRepo repository;
     @PersistenceContext
     private EntityManager em;
 
     public StudentDirectoryServiceImpl(StudentDirectoryRepo repository) {
 
         super(repository);
-
+        this.repository = repository;
     }
 
     public List<StudentDirectory> findByAcademicYearAndMajorAndOtherFilters(LocalDate academicYear, String major, String otherFilter) {
@@ -56,4 +58,9 @@ public class StudentDirectoryServiceImpl extends CrudServiceImpl<StudentDirector
         return query.getResultList();
     }
 
+    public Page<StudentDirectory> getStudentDirectoryByPage(int pageNumber, int pageSize) {
+        PageRequest request = PageRequest.of(pageNumber,pageSize);
+        Page<StudentDirectory> pages =  repository.findAll(request);
+        return pages;
+    }
 }

@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +37,14 @@ public class StudentDirectoryController extends CrudController<StudentDirectory,
 
         List<StudentDirectory> students = studentDirectoryService.findByAcademicYearAndMajorAndOtherFilters(academicyear,major,text);
        return ResponseEntity.ok().body(StudentDirectoryMapper.toStudentDirectoryDTOList(students));
+    }
+    @GetMapping("/pages/{page}")
+    public ResponseEntity<List<StudentDirectoryDTO>> getPage(@PathVariable int page, @RequestParam(required = false) Integer size) {
+        if (size == null) {
+            size = 10;
+        }
+
+        Page<StudentDirectory> studentDirectoriesPage = studentDirectoryService.getStudentDirectoryByPage(page, size);
+        return ResponseEntity.ok().body(StudentDirectoryMapper.toStudentDirectoryDTOList(studentDirectoriesPage.getContent()));
     }
 }
