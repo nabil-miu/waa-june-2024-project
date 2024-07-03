@@ -6,14 +6,18 @@ import edu.miu.cs545.project.repository.PostRepository;
 import edu.miu.cs545.project.repository.ThreadPostRepository;
 import edu.miu.cs545.project.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 @Transactional
 @Service
 public class PostServiceImpl extends CrudServiceImpl<Post, Long> implements PostService {
-    public PostServiceImpl(ListCrudRepository<Post, Long> postRepository) {
+    public PostServiceImpl(PostRepository postRepository) {
         super( postRepository);
     }
 
@@ -35,5 +39,29 @@ public class PostServiceImpl extends CrudServiceImpl<Post, Long> implements Post
             post.setParentPost(null);
         }
         return postRepository.save(post);
+    }
+
+    @Override
+    public Post update(Long id, Post post) {
+        if (!postRepository.existsById(id)) {
+            throw new RuntimeException("Resource not found with id: " + id);
+        }
+        if (post.getParentPost() != null && post.getParentPost().getId() == null) {
+            post.setParentPost(null);
+        }
+        return postRepository.save(post);
+    }
+
+    @Override
+    public Page<Post> findAllPost(Integer page, Integer size, String sortDirection) {
+        try{
+            Sort sort = Sort.by("id");
+            sort = sortDirection.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+            Pageable pageable = PageRequest.of(page,size,sort);
+            return postRepository.findByParentPostIsNull(pageable);
+
+        }catch (Exception e){
+            throw  new RuntimeException("Some thing happened in the server.");
+        }
     }
 }
