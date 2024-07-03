@@ -6,7 +6,7 @@ import edu.miu.cs545.project.model.entity.Student;
 import java.time.LocalDate;
 
 public class StudentDtoMapper {
-    public static StudentDTO toUserDTO(Student student) {
+    public static StudentDTO toStudentDTO(Student student) {
         if (student == null) {
             return null;
         }
