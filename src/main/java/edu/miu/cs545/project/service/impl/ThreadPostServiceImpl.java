@@ -14,29 +14,29 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class ThreadPostServiceImpl extends CrudServiceImpl<ThreadPost,Long> implements ThreadPostService {
-      public ThreadPostServiceImpl(ThreadPostRepository threadPostRepository){
-          super(threadPostRepository);
-      }
+public class ThreadPostServiceImpl extends CrudServiceImpl<ThreadPost, Long> implements ThreadPostService {
+    public ThreadPostServiceImpl(ThreadPostRepository threadPostRepository) {
+        super(threadPostRepository);
+    }
 
-      @Autowired
-      private ThreadPostRepository  threadPostRepository;
+    @Autowired
+    private ThreadPostRepository threadPostRepository;
 
-      @Autowired
-      private ResourceCategoryRepo resourceCategoryRepo;
+    @Autowired
+    private ResourceCategoryRepo resourceCategoryRepo;
 
     @Override
-    public Page<ThreadPost> findThreadPostByCategory(Long id,Integer page, Integer size,String sortDirection) {
-        try{
-           Optional<ResourceCategory> categoryOpt = resourceCategoryRepo.findById(id);
-           Sort sort = Sort.by("id");
+    public Page<ThreadPost> findThreadPostByCategory(Long id, Integer page, Integer size, String sortDirection) {
+        try {
+            Optional<ResourceCategory> categoryOpt = resourceCategoryRepo.findById(id);
+            Sort sort = Sort.by("id");
             sort = sortDirection.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
-            Pageable pageable = PageRequest.of(page,size,sort);
-           if(categoryOpt.isPresent())
-               return  threadPostRepository.findThreadPostByResourceCategory(categoryOpt.get(),pageable);
-        }catch (Exception e){
-            throw  new RuntimeException("Some thing happened in the server.");
+            Pageable pageable = PageRequest.of(page, size, sort);
+            if (categoryOpt.isPresent())
+                return threadPostRepository.findThreadPostByResourceCategory(categoryOpt.get(), pageable);
+        } catch (Exception e) {
+            throw new RuntimeException("Some thing happened in the server.");
         }
-        return null;
+        throw new RuntimeException("No data found");
     }
 }

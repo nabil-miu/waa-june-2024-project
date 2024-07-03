@@ -54,25 +54,24 @@ public class PostController extends CrudController<Post, Long> {
     }
 
 
-
     @GetMapping("/thread-post")
     public Page<Post> getParentPostByThreadPost(@RequestParam(value = "id", required = true) Long id,
-                                                    @RequestParam(value = "page", required = false) Integer page ,
-                                                    @RequestParam(value = "size", required = false) Integer size,
-                                                    @RequestParam(defaultValue = "asc") String sortDirection){
-        if(null == page) page = 0;
-        if(null == size) size = 10;
-        return postService.findParentPostByThread(id,page,size,sortDirection);
+                                                @RequestParam(value = "page", required = false) Integer page,
+                                                @RequestParam(value = "size", required = false) Integer size,
+                                                @RequestParam(defaultValue = "asc") String sortDirection) {
+        if (page == null) page = 0;
+        if (size == null) size = 10;
+        return postService.findParentPostByThread(id, page, size, sortDirection);
     }
 
     @GetMapping("/parent-post")
     public Page<Post> getChildPostByParentPost(@RequestParam(value = "id", required = true) Long id,
-                                              @RequestParam(value = "page", required = false) Integer page ,
-                                              @RequestParam(value = "size", required = false) Integer size,
-                                              @RequestParam(defaultValue = "asc") String sortDirection){
-        if(null == page) page = 0;
-        if(null == size) size = 10;
-        return postService.findChildPostByParentPost(id,page,size,sortDirection);
+                                               @RequestParam(value = "page", required = false) Integer page,
+                                               @RequestParam(value = "size", required = false) Integer size,
+                                               @RequestParam(defaultValue = "asc") String sortDirection) {
+        if (page == null) page = 0;
+        if (size == null) size = 10;
+        return postService.findChildPostByParentPost(id, page, size, sortDirection);
     }
-    
+
 }
