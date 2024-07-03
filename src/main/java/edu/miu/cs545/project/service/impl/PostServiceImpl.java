@@ -43,14 +43,14 @@ public class PostServiceImpl extends CrudServiceImpl<Post, Long> implements Post
 
 
     @Override
-    public Page<Post> findPostByThread(Long id, Integer page, Integer size, String sortDirection) {
+    public Page<Post> findParentPostByThread(Long id, Integer page, Integer size, String sortDirection) {
         try{
             Sort sort = Sort.by("id");
             sort = sortDirection.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
             Pageable pageable = PageRequest.of(page,size,sort);
             Optional<ThreadPost> threadPostOpt = threadPostRepository.findById(id);
             if(threadPostOpt.isPresent())
-                return postRepository.findPostByThreadPost(threadPostOpt.get(),pageable);
+                return postRepository.findByThreadPostAndParentPostIsNull(threadPostOpt.get(),pageable);
 
         }catch (Exception e){
         throw  new RuntimeException("Some thing happened in the server.");
@@ -58,4 +58,22 @@ public class PostServiceImpl extends CrudServiceImpl<Post, Long> implements Post
 
         return null;
     }
+
+    @Override
+    public Page<Post> findChildPostByParentPost(Long id, Integer page, Integer size, String sortDirection) {
+        try{
+            Sort sort = Sort.by("id");
+            sort = sortDirection.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+            Pageable pageable = PageRequest.of(page,size,sort);
+            Optional<Post> postOpt = postRepository.findById(id);
+            if(postOpt.isPresent())
+                return postRepository.findByParentPost(postOpt.get(),pageable);
+
+        }catch (Exception e){
+            throw  new RuntimeException("Some thing happened in the server.");
+        }
+
+        return null;
+    }
+
 }

@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post,Long> {
-    Page<Post> findPostByThreadPost(ThreadPost threadPost, Pageable pageable);
+    Page<Post> findByThreadPostAndParentPostIsNull(ThreadPost threadPost, Pageable pageable);
+    Page<Post> findByParentPost(Post post,Pageable pageable);
 }
