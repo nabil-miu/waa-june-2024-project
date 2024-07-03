@@ -5,7 +5,13 @@ import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface StudentDirectoryRepo extends ListCrudRepository<StudentDirectory, Long>, PagingAndSortingRepository<StudentDirectory,Long> {
 
 }
+
+
