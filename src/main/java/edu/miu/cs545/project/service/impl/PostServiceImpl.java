@@ -12,13 +12,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Optional;
 
 
 @Transactional
 @Service
 public class PostServiceImpl extends CrudServiceImpl<Post, Long> implements PostService {
     public PostServiceImpl(PostRepository postRepository) {
-        super( postRepository);
+        super(postRepository);
     }
 
     @Autowired
@@ -41,6 +42,7 @@ public class PostServiceImpl extends CrudServiceImpl<Post, Long> implements Post
         return postRepository.save(post);
     }
 
+
     @Override
     public Post update(Long id, Post post) {
         if (!postRepository.existsById(id)) {
@@ -54,14 +56,50 @@ public class PostServiceImpl extends CrudServiceImpl<Post, Long> implements Post
 
     @Override
     public Page<Post> findAllPost(Integer page, Integer size, String sortDirection) {
-        try{
+        try {
             Sort sort = Sort.by("id");
             sort = sortDirection.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
-            Pageable pageable = PageRequest.of(page,size,sort);
+            Pageable pageable = PageRequest.of(page, size, sort);
             return postRepository.findByParentPostIsNull(pageable);
 
-        }catch (Exception e){
-            throw  new RuntimeException("Some thing happened in the server.");
+        } catch (Exception e) {
+            throw new RuntimeException("Some thing happened in the server.");
         }
     }
+
+
+    @Override
+    public Page<Post> findParentPostByThread(Long id, Integer page, Integer size, String sortDirection) {
+        try {
+            Sort sort = Sort.by("id");
+            sort = sortDirection.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+            Pageable pageable = PageRequest.of(page, size, sort);
+            Optional<ThreadPost> threadPostOpt = threadPostRepository.findById(id);
+            if (threadPostOpt.isPresent())
+                return postRepository.findByThreadPostAndParentPostIsNull(threadPostOpt.get(), pageable);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Some thing happened in the server.");
+        }
+
+        throw new RuntimeException("No data found");
+    }
+
+    @Override
+    public Page<Post> findChildPostByParentPost(Long id, Integer page, Integer size, String sortDirection) {
+        try {
+            Sort sort = Sort.by("id");
+            sort = sortDirection.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+            Pageable pageable = PageRequest.of(page, size, sort);
+            Optional<Post> postOpt = postRepository.findById(id);
+            if (postOpt.isPresent())
+                return postRepository.findByParentPost(postOpt.get(), pageable);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Some thing happened in the server.");
+        }
+
+        throw new RuntimeException("No data found");
+    }
+
 }
