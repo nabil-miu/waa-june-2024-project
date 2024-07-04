@@ -8,11 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProfileServiceImpl extends CrudServiceImpl<Profile, Long> implements ProfileService {
 
-    private final ProfileRepo repository;
-
     public ProfileServiceImpl(ProfileRepo repository) {
         super(repository);
-        this.repository = repository;
     }
 
 }
