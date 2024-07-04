@@ -27,6 +27,7 @@ public class ResourceCategory extends BasicEntity {
     @Nullable
     private ResourceCategory parent;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     @Nullable
     private List<ResourceCategory> categoryList;

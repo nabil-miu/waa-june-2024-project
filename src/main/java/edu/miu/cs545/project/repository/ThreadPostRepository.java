@@ -1,13 +1,19 @@
 package edu.miu.cs545.project.repository;
 
+import edu.miu.cs545.project.model.entity.ResourceCategory;
 import edu.miu.cs545.project.model.entity.ThreadPost;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
 public interface ThreadPostRepository extends GenericRepo<ThreadPost, Long> {
 
     List<ThreadPost> findThreadPostsByTitleLike(String threadTitle);
+
+    Page<ThreadPost> findAll(Pageable pageable);
+
+    Page<ThreadPost> findThreadPostByResourceCategory(ResourceCategory resourceCategory, Pageable pageable);
 
 }

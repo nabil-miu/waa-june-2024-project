@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @Data
@@ -19,13 +21,17 @@ public class SurveyQuestion extends BasicEntity {
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
 
-    @OneToOne
-    @Valid
-    private SurveyResponse surveyResponse;
-
     @ManyToOne
     @JoinColumn(name = "survey_id")
     @Valid
     private Survey survey;
+
+    @OneToMany(mappedBy = "question")
+    @Valid
+    private List<SurveyAnswerChoice> answers;
+
+    @OneToMany(mappedBy = "question")
+    @Valid
+    private List<SurveyResponse> responses;
 
 }
