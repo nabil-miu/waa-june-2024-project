@@ -1,8 +1,8 @@
 package edu.miu.cs545.project.model.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class SurveyResponse extends BasicEntity {
 
-    @NotBlank(message = "Answer can't be blank")
+    @Nullable
     private String answer;
 
     private Character response;
