@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.time.LocalDate;
 import java.util.Optional;
 
 
@@ -100,6 +101,16 @@ public class PostServiceImpl extends CrudServiceImpl<Post, Long> implements Post
         }
 
         throw new RuntimeException("No data found");
+    }
+
+    @Override
+    public Page<Post> getSearchPosts(String postContent, LocalDate createdAt,
+                                     LocalDate updatedAt, Pageable pageable) {
+        try {
+            return postRepository.findByContentAndCreatedAtAndUpdatedAtAndParentPostIsNull(postContent, createdAt, updatedAt, pageable);
+        } catch (Exception e) {
+            throw new RuntimeException("Some thing happened in the server.");
+        }
     }
 
 }
