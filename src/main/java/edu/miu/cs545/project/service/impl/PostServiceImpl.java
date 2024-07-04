@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.Optional;
 
-
 @Transactional
 @Service
 public class PostServiceImpl extends CrudServiceImpl<Post, Long> implements PostService {

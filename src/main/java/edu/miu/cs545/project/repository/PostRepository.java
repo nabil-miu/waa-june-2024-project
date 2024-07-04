@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 
-
 @Repository
 public interface PostRepository extends JpaRepository<Post,Long> {
     Page<Post> findByParentPostIsNull(Pageable pageable);

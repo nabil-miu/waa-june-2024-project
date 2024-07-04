@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
 
-
 public interface PostService extends CrudService<Post,Long>{
     Page<Post> findAllPost(Integer page, Integer size, String sortDirection);
 
