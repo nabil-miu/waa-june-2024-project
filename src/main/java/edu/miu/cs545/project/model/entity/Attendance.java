@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class Attendance {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Long id;
 
