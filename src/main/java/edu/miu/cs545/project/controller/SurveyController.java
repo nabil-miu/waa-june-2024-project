@@ -25,4 +25,6 @@ public class SurveyController extends CrudController<Survey, Long> {
         List<Survey> surveys = surveyService.getAllActiveSurveys();
         return ResponseEntity.ok().body(surveys);
     }
+
+
 }

@@ -3,7 +3,6 @@ package edu.miu.cs545.project.controller;
 import edu.miu.cs545.project.model.entity.StudentDirectory;
 import edu.miu.cs545.project.service.StudentDirectoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +23,11 @@ public class StudentDirectoryController extends CrudController<StudentDirectory,
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<StudentDirectory>> searchByLastName(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate academicyear,
+    public ResponseEntity<List<StudentDirectory>> searchByLastName(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate academicyear,
                                                                       @RequestParam(required = false) String major,
                                                                       @RequestParam(required = false) String text) {
 
         List<StudentDirectory> students = studentDirectoryService.findByAcademicYearAndMajorAndOtherFilters(academicyear,major,text);
-        return ResponseEntity.ok().body(students);
+       return ResponseEntity.ok().body(students);
     }
 }
