@@ -36,22 +36,45 @@ VALUES (1, '2023-07-01 18:00:00', 'Conference Hall A, Springfield University', '
         'A perfect place for students and professionals to meet potential employers.');
 
 INSERT INTO project.survey (created_at, expired_at, is_active, id, description, title)
-VALUES ('2023-06-30', NULL, true, 1, 'A survey to understand student satisfaction with campus facilities.',
+VALUES ('2023-06-30','2023-06-30', true, 1, 'A survey to understand student satisfaction with campus facilities.',
         'Campus Satisfaction Survey 2023'),
-       ('2023-07-01', NULL, true, 2, 'A survey to gather feedback on the recent Tech Talk event.',
+       ('2023-07-01','2025-06-30', true, 2, 'A survey to gather feedback on the recent Tech Talk event.',
         'Tech Talk Feedback 2023');
 
-INSERT INTO project.survey_question (survey_id, survey_response_id, question, question_type)
-VALUES (1, NULL, 'How do you find the overall campus environment?', 'MULTIPLE_CHOICE'),
-       (1, NULL, 'Are the recreational facilities adequate?', 'BOOLEAN_INPUT'),
-       (2, NULL, 'Is the faculty support satisfactory?', 'BOOLEAN_INPUT'),
-       (2, NULL, 'Are there enough professional development programs?', 'MULTIPLE_CHOICE');
+INSERT INTO project.survey_question (survey_id, question, question_type)
+VALUES
+    (1, 'How do you find the overall campus environment?', 'MULTIPLE_CHOICE'),
+    (1, 'Are the recreational facilities adequate?', 'BOOLEAN_INPUT'),
+    (2, 'Is the faculty support satisfactory?', 'BOOLEAN_INPUT'),
+    (2, 'Are there enough professional development programs?', 'MULTIPLE_CHOICE');
 
-INSERT INTO project.survey_response (user_id, answer)
-VALUES (1, 'The campus life is engaging and enriching.'),
-       (2, 'There needs to be more recreational activities.'),
-       (1, 'Faculty are well supported in their roles.'),
-       (2, 'More professional development opportunities needed.');
+INSERT INTO project.survey_answer_choice (choice, description, question_id)
+VALUES
+    ('A', 'Very Good', 1),
+    ('B', 'Good', 1),
+    ('C', 'Average', 1),
+    ('D', 'Poor', 1),
+    ('A', 'Yes', 2),
+    ('B', 'No', 2),
+    ('A', 'Yes', 3),
+    ('B', 'No', 3),
+    ('A', 'Many programs', 4),
+    ('B', 'Some programs', 4),
+    ('C', 'Few programs', 4);
+
+INSERT INTO project.survey_response (question_id, user_id, response)
+VALUES
+    (1, 1, 'A'),
+    (1, 2, 'B'),
+    (1, 3, 'D'),
+    (2, 1, 'A'),
+    (2, 2, 'B'),
+    (2, 3, 'B'),
+    (3, 1, 'A'),
+    (3, 2, 'B'),
+    (4, 1, 'B'),
+    (4, 3, 'B'),
+    (4, 2, 'B');
 
 INSERT INTO project.extracurricular_activity (id, name, description)
 VALUES (1, 'Robotics Club', 'A club for students interested in building and learning about robots.'),
@@ -100,10 +123,10 @@ VALUES ('2023-07-01 09:35:00', '2023-07-01 09:35:00', 1,
         'Debugging is an essential skill. These tips are very practical.');
 
 INSERT INTO project.student_directory (academic_year, user_id, contact_information, major)
-VALUES ('2023-09-01', 1, 'john.doe@example.com, +1234567890', 'Computer Science'),
+VALUES ('2024-06-01', 1, 'john.doe@example.com, +1234567890', 'Computer Science'),
        ('2023-09-01', 2, 'jane.smith@example.com, +0987654321', 'Graphic Design'),
-       ('2023-09-01', 3, 'alice.johnson@example.com, +1122334455', 'Mechanical Engineering'),
-       ('2023-09-01', 4, 'bob.brown@example.com, +1223344556', 'Business Administration');
+       ('2022-09-01', 3, 'alice.johnson@example.com, +1122334455', 'Mechanical Engineering'),
+       ('2021-08-01', 4, 'bob.brown@example.com, +1223344556', 'Business Administration');
 
 INSERT INTO project.rsvp (date, event_id, user_id, status)
 VALUES ('2023-07-01', 1, 1, 'YES'),

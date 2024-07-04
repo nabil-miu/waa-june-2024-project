@@ -6,11 +6,6 @@ import lombok.Data;
 import lombok.Setter;
 
 
-//Response ID
-//Question ID (FK)
-//User ID (FK)
-//Answer
-
 @Entity
 @Data
 public class SurveyResponse {
@@ -18,7 +13,10 @@ public class SurveyResponse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Long id;
-    private String answer;
+    private Character response;
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private SurveyQuestion question;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Student student;

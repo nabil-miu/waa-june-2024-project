@@ -3,26 +3,21 @@ package edu.miu.cs545.project.model.entity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.util.HashMap;
 
 
 @Entity
 @Data
-public class Survey {
+public class SurveyAnswerChoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Long id;
-    private String title;
+    private Character choice;
     private String description;
-    private LocalDate createdAt;
-    private LocalDate expiredAt;
-    private boolean isActive;
-    @OneToMany(mappedBy = "survey")
-    private List<SurveyQuestion> surveyQuestions;
-
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private SurveyQuestion question;
 }
