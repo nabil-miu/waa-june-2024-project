@@ -41,8 +41,8 @@ public abstract class CrudController<T, ID> {
 
     @PutMapping("/{id}")
     public ResponseEntity<T> update(@PathVariable ID id, @RequestBody T entity) {
-        crudService.update(id, entity);
-        return ResponseEntity.ok(entity);
+        T newEntity = crudService.update(id, entity);
+        return ResponseEntity.ok(newEntity);
     }
 
     @DeleteMapping("/{id}")

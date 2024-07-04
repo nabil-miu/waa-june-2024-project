@@ -45,6 +45,6 @@ public class UserController extends CrudController<User, Long> {
     public ResponseEntity<String> unblock(@PathVariable Long blockedId, @RequestBody User blocker) {
         Optional<User> blocked = userService.getById(blockedId);
         blockService.unblockUser(blocker, blocked.orElse(null));
-        return ResponseEntity.ok("User blocked successfully");
+        return ResponseEntity.ok("User unblocked successfully");
     }
 }

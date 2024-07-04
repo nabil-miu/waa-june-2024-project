@@ -1,19 +1,23 @@
 package edu.miu.cs545.project.service.impl;
 
 import edu.miu.cs545.project.model.entity.*;
-import edu.miu.cs545.project.repository.PostReportRepository;
+import edu.miu.cs545.project.repository.ReportRepository;
+import edu.miu.cs545.project.repository.UserRepo;
 import edu.miu.cs545.project.service.ModerationService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ModerationServiceImpl extends CrudServiceImpl<Report, Long> implements ModerationService {
 
-    private final PostReportRepository repository;
+    private final ReportRepository repository;
+    private final UserRepo userRepo;
 
-    public ModerationServiceImpl(PostReportRepository repository) {
+    public ModerationServiceImpl(ReportRepository repository, UserRepo userRepo) {
         super(repository);
         this.repository = repository;
-
+        this.userRepo = userRepo;
     }
 
     @Override
@@ -32,5 +36,11 @@ public class ModerationServiceImpl extends CrudServiceImpl<Report, Long> impleme
         report.setPost(post);
         report.setReason(reason);
         return repository.save(report);
+    }
+
+    @Override
+    public List<Report> getReportsByUser(Long userId) {
+        User user = userRepo.findById(userId).orElse(null);
+        return repository.findAllByReportedByIs(user);
     }
 }
