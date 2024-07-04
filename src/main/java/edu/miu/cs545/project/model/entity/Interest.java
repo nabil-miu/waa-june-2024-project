@@ -1,6 +1,7 @@
 package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,6 +16,7 @@ public class Interest extends BasicEntity {
     @NotBlank(message = "Interest name can't be left empty")
     private String name;
     @ManyToMany(mappedBy = "interests")
+    @Valid
     private List<Student> students;
     @Lob
     private String description;

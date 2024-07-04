@@ -1,5 +1,6 @@
 package edu.miu.cs545.project.model.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -14,8 +15,10 @@ public class AcademicResource extends BasicEntity{
     private String name;
 
     @Lob
+    @Nullable
     private String description;
 
+    @NotBlank(message = "Url can't be left empty")
     private String url;
 
     @ManyToOne

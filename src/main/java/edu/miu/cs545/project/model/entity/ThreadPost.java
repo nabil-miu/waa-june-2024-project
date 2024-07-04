@@ -1,6 +1,7 @@
 package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,9 +19,11 @@ public class ThreadPost extends BasicEntity {
     private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @Valid
     private ResourceCategory resourceCategory;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @Valid
     private  User user;
 
     // Callback methods for title and createdAt

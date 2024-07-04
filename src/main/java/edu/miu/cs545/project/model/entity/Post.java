@@ -1,6 +1,7 @@
 package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,10 +16,12 @@ public class Post extends BasicEntity {
     private String content;
 
     @ManyToOne
+    @Valid
     private ThreadPost threadPost;
 
     @ManyToOne
     @JoinColumn(name = "parent_post_id")
+    @Valid
     private Post parentPost;
 
     @Column(updatable = false, nullable = false)

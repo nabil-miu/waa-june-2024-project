@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,10 +17,12 @@ public class UserBlock extends BasicEntity {
 
     @ManyToOne
     @JoinColumn(name = "blocker_id", nullable = false)
+    @Valid
     private User blocker;
 
     @ManyToOne
     @JoinColumn(name = "blocked_id", nullable = false)
+    @Valid
     private User blocked;
 
     @Column(nullable = false)

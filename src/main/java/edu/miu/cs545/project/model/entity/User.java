@@ -3,6 +3,7 @@ package edu.miu.cs545.project.model.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,15 +23,20 @@ public class User extends BasicEntity {
     private String firstName;
     @NotBlank(message = "Lastname is mandatory")
     private String lastName;
+
+    @Pattern(regexp = "^\\+?[0-9. ()-]{7,25}$", message = "Phone number is invalid")
     private String phone;
     private String address;
     private String city;
     private String state;
+
+    @Pattern(regexp = "^[0-9]{5}(?:-[0-9]{4})?$", message = "Zip code is invalid")
     private String zip;
     private String country;
+
+    @NotBlank(message = "Role is mandatory")
     private String role;
-    //@AssertTrue
-    //@AssertFalse
+
     private boolean active;
     private boolean accountNonExpired;
     private boolean accountNonLocked;

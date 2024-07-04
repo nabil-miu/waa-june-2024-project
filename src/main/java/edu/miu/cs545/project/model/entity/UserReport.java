@@ -4,6 +4,7 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,6 +16,7 @@ public class UserReport extends Report {
 
     @ManyToOne
     @JoinColumn(name = "target_user_id", nullable = false)
+    @Valid
     public User targetUser;
 
 }

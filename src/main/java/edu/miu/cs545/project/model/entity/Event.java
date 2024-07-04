@@ -20,6 +20,7 @@ public class Event extends BasicEntity {
     @Lob
     private String description;
 
+    @NotBlank(message = "Event location can't be left empty")
     private String location;
 
     private LocalDateTime localDateTime;
