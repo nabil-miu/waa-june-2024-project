@@ -8,11 +8,16 @@ import edu.miu.cs545.project.service.ModerationService;
 import edu.miu.cs545.project.service.PostService;
 import edu.miu.cs545.project.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -47,4 +52,26 @@ public class PostController extends CrudController<Post, Long> {
         List<Post> posts = postService.getAll().stream().filter(post -> !blockedUsers.contains(post.getThreadPost().getUser())).toList();
         return ResponseEntity.ok(posts);
     }
+
+
+    @GetMapping("/thread-post")
+    public Page<Post> getParentPostByThreadPost(@RequestParam(value = "id", required = true) Long id,
+                                                @RequestParam(value = "page", required = false) Integer page,
+                                                @RequestParam(value = "size", required = false) Integer size,
+                                                @RequestParam(defaultValue = "asc") String sortDirection) {
+        if (page == null) page = 0;
+        if (size == null) size = 10;
+        return postService.findParentPostByThread(id, page, size, sortDirection);
+    }
+
+    @GetMapping("/parent-post")
+    public Page<Post> getChildPostByParentPost(@RequestParam(value = "id", required = true) Long id,
+                                               @RequestParam(value = "page", required = false) Integer page,
+                                               @RequestParam(value = "size", required = false) Integer size,
+                                               @RequestParam(defaultValue = "asc") String sortDirection) {
+        if (page == null) page = 0;
+        if (size == null) size = 10;
+        return postService.findChildPostByParentPost(id, page, size, sortDirection);
+    }
+
 }
