@@ -56,3 +56,16 @@ VALUES (1, 1),
 INSERT INTO user_interests (interests_id, students_id)
 VALUES (1, 1),
        (2, 2);
+
+-- ResourceCategory
+INSERT INTO resource_category (name, description, parent_id)
+VALUES ('Electronics', 'Category for electronic items', NULL);
+INSERT INTO resource_category (name, description, parent_id)
+VALUES ('Computers', 'Category for computers and accessories', 1);
+INSERT INTO resource_category (name, description, parent_id)
+VALUES ('Laptops', 'Subcategory for laptops', 2);
+INSERT INTO resource_category (name, description, parent_id)
+VALUES ('Smartphones', 'Category for smartphones', 1);
+INSERT INTO resource_category (name, description, parent_id)
+VALUES ('Gaming Consoles', 'Category for gaming consoles', 1);
+
