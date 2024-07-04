@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @Data
@@ -16,9 +18,11 @@ public class SurveyQuestion {
     private String question;
     @Enumerated(EnumType.STRING)
     private QuestionType questionType;
-    @OneToOne
-    private SurveyResponse surveyResponse;
     @ManyToOne
     @JoinColumn(name = "survey_id")
     private Survey survey;
+    @OneToMany(mappedBy = "question")
+    private List<SurveyAnswerChoice> answers;
+    @OneToMany(mappedBy = "question")
+    private List<SurveyResponse> responses;
 }
