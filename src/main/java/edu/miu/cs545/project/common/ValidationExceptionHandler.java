@@ -1,4 +1,4 @@
-package edu.miu.cs545.project.util;
+package edu.miu.cs545.project.common;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;

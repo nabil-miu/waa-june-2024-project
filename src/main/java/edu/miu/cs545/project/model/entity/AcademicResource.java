@@ -2,17 +2,15 @@ package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Entity
 @Data
-public class AcademicResource {
+@EqualsAndHashCode(callSuper = true)
+public class AcademicResource extends BasicEntity{
 
-    @Id
-    @GeneratedValue
-    @Setter(AccessLevel.NONE)
-    private Long id;
-
+    @NotBlank(message = "Resource name can't be left empty")
     private String name;
 
     @Lob
@@ -29,4 +27,5 @@ public class AcademicResource {
     @JoinColumn(name = "category_id")
     @Valid
     private ResourceCategory resourceCategory;
+
 }

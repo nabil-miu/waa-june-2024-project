@@ -1,20 +1,15 @@
 package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
-public class StudentDirectory {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private Long id;
+public class StudentDirectory extends BasicEntity {
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -22,4 +17,5 @@ public class StudentDirectory {
     private String contactInformation;
     private LocalDate academicYear;
     private String major;
+
 }

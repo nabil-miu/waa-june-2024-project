@@ -1,22 +1,17 @@
 package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.util.List;
 
-
 @Entity
 @Data
-public class Survey {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class Survey extends BasicEntity {
+
     private String title;
     private String description;
     private LocalDate createdAt;
@@ -27,4 +22,5 @@ public class Survey {
     @OneToMany
     @JoinColumn(name = "survey_responses")
     private List<SurveyResponse> surveyResponses;
+
 }

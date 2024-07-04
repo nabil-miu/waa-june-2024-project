@@ -2,20 +2,15 @@ package edu.miu.cs545.project.model.entity;
 
 import edu.miu.cs545.project.model.AttendanceType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Setter;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
-public class Attendance {
-
-    @Id
-    @GeneratedValue
-    @Setter(AccessLevel.NONE)
-    private Long id;
+public class Attendance extends BasicEntity {
 
     @ManyToOne
     @JoinColumn(name = "event_id")
@@ -28,4 +23,5 @@ public class Attendance {
     @Enumerated(EnumType.STRING)
     private AttendanceType status;
     private LocalDate attendanceDate;
+
 }

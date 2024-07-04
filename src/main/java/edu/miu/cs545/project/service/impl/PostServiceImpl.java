@@ -5,23 +5,21 @@ import edu.miu.cs545.project.model.entity.ThreadPost;
 import edu.miu.cs545.project.repository.PostRepository;
 import edu.miu.cs545.project.repository.ThreadPostRepository;
 import edu.miu.cs545.project.service.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Service
 public class PostServiceImpl extends CrudServiceImpl<Post, Long> implements PostService {
-    public PostServiceImpl(ListCrudRepository<Post, Long> postRepository) {
+
+    private final PostRepository postRepository;
+    private final ThreadPostRepository threadPostRepository;
+
+    public PostServiceImpl(PostRepository postRepository, ThreadPostRepository threadPostRepository) {
         super( postRepository);
+        this.postRepository = postRepository;
+        this.threadPostRepository = threadPostRepository;
     }
-
-    @Autowired
-    private PostRepository postRepository;
-
-    @Autowired
-    private ThreadPostRepository threadPostRepository;
 
     @Override
     public Post create(Post post) {
@@ -36,4 +34,5 @@ public class PostServiceImpl extends CrudServiceImpl<Post, Long> implements Post
         }
         return postRepository.save(post);
     }
+
 }

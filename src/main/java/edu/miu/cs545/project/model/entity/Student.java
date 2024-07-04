@@ -2,17 +2,18 @@ package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @DiscriminatorValue(value = "STUDENT")
 public class Student extends User {
+
     @NotBlank(message = "Student id required")
     private String studentId;
     private LocalDate academicYear;
@@ -44,4 +45,5 @@ public class Student extends User {
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Attendance> attendances;
+
 }

@@ -3,15 +3,15 @@ package edu.miu.cs545.project.model.entity;
 import edu.miu.cs545.project.model.QuestionType;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @Data
-public class SurveyQuestion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class SurveyQuestion extends BasicEntity {
+
     @Lob
     private String question;
     @Enumerated(EnumType.STRING)
@@ -21,4 +21,5 @@ public class SurveyQuestion {
     @ManyToOne
     @JoinColumn(name = "survey_id")
     private Survey survey;
+
 }

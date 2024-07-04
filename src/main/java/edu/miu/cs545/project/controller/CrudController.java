@@ -1,5 +1,6 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.model.entity.BasicEntity;
 import edu.miu.cs545.project.service.CrudService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +13,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@RestController
 @RequiredArgsConstructor
-public abstract class CrudController<T, ID> {
+public abstract class CrudController<T extends BasicEntity, ID> {
 
     private final CrudService<T, ID> crudService;
 

@@ -1,17 +1,15 @@
 package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
-public class ThreadPost {
-    @Id
-    @Setter(AccessLevel.NONE)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class ThreadPost extends BasicEntity {
 
     @Column(unique = true, nullable = false)
     private  String title;
@@ -25,7 +23,6 @@ public class ThreadPost {
     @ManyToOne(fetch = FetchType.EAGER)
     private  User user;
 
-
     // Callback methods for title and createdAt
     @PrePersist
     private void prePersist() {
@@ -33,7 +30,6 @@ public class ThreadPost {
         if (this.title != null) {
             this.title = this.title.trim().toLowerCase();
         }
-
     }
 
     @PreUpdate
@@ -42,4 +38,5 @@ public class ThreadPost {
             this.title = this.title.trim().toLowerCase();
         }
     }
+
 }
