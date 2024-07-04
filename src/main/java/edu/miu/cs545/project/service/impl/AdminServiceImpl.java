@@ -22,4 +22,13 @@ public class AdminServiceImpl extends CrudServiceImpl<User, Long> implements Adm
             repository.save(user);
         }
     }
+
+    @Override
+    public void activateUser(Long id) {
+        User user = repository.findById(id).orElse(null);
+        if (user != null) {
+            user.setActive(true);
+            repository.save(user);
+        }
+    }
 }
