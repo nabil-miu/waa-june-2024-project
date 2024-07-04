@@ -5,7 +5,6 @@ import edu.miu.cs545.project.model.entity.ThreadPost;
 import edu.miu.cs545.project.repository.PostRepository;
 import edu.miu.cs545.project.repository.ThreadPostRepository;
 import edu.miu.cs545.project.service.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,15 +17,15 @@ import java.util.Optional;
 @Transactional
 @Service
 public class PostServiceImpl extends CrudServiceImpl<Post, Long> implements PostService {
-    public PostServiceImpl(PostRepository postRepository) {
-        super(postRepository);
+
+    private final PostRepository postRepository;
+    private final ThreadPostRepository threadPostRepository;
+
+    public PostServiceImpl(PostRepository postRepository, ThreadPostRepository threadPostRepository) {
+        super( postRepository);
+        this.postRepository = postRepository;
+        this.threadPostRepository = threadPostRepository;
     }
-
-    @Autowired
-    private PostRepository postRepository;
-
-    @Autowired
-    private ThreadPostRepository threadPostRepository;
 
     @Override
     public Post create(Post post) {
@@ -41,7 +40,6 @@ public class PostServiceImpl extends CrudServiceImpl<Post, Long> implements Post
         }
         return postRepository.save(post);
     }
-
 
     @Override
     public Post update(Long id, Post post) {

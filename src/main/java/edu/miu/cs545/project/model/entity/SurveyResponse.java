@@ -1,24 +1,29 @@
 package edu.miu.cs545.project.model.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
+import jakarta.validation.Valid;
 import lombok.Data;
-import lombok.Setter;
-
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-public class SurveyResponse {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class SurveyResponse extends BasicEntity {
+
+    @Nullable
+    private String answer;
+
     private Character response;
+
     @ManyToOne
     @JoinColumn(name = "question_id")
+    @Valid
     private SurveyQuestion question;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @Valid
     private Student student;
 
 }

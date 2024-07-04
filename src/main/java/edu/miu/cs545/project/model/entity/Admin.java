@@ -2,11 +2,11 @@ package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @DiscriminatorValue(value = "ADMIN")
 public class Admin extends User {

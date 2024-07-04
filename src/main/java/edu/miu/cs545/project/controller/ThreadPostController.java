@@ -3,7 +3,6 @@ package edu.miu.cs545.project.controller;
 import edu.miu.cs545.project.model.entity.ThreadPost;
 import edu.miu.cs545.project.service.ThreadPostService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "ThreadPost", description = "Thread Post API")
 public class ThreadPostController extends CrudController<ThreadPost, Long> {
 
-    private ThreadPostService threadPostService;
+    private final ThreadPostService threadPostService;
 
     public ThreadPostController(ThreadPostService threadPostService) {
         super(threadPostService);

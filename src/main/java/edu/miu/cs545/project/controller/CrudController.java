@@ -1,6 +1,8 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.model.entity.BasicEntity;
 import edu.miu.cs545.project.service.CrudService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +13,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+@RestController
 @RequiredArgsConstructor
-public abstract class CrudController<T, ID> {
+public abstract class CrudController<T extends BasicEntity, ID> {
 
     private final CrudService<T, ID> crudService;
 
@@ -30,7 +33,7 @@ public abstract class CrudController<T, ID> {
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody T entity) {
+    public ResponseEntity<Void> create(@Valid @RequestBody T entity) {
         crudService.create(entity);
         URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
                 .path("/{id}")
@@ -40,7 +43,7 @@ public abstract class CrudController<T, ID> {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<T> update(@PathVariable ID id, @RequestBody T entity) {
+    public ResponseEntity<T> update(@PathVariable ID id, @Valid @RequestBody T entity) {
         T newEntity = crudService.update(id, entity);
         return ResponseEntity.ok(newEntity);
     }
@@ -63,4 +66,5 @@ public abstract class CrudController<T, ID> {
             throw new IllegalArgumentException("Failed to get ID from entity", e);
         }
     }
+
 }

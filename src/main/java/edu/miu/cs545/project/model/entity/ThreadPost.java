@@ -2,20 +2,16 @@ package edu.miu.cs545.project.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.Valid;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
-public class ThreadPost {
-    @Id
-    @Setter(AccessLevel.NONE)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class ThreadPost extends BasicEntity {
 
     @Column(nullable = false)
     private String title;
@@ -25,11 +21,12 @@ public class ThreadPost {
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
+    @Valid
     private ResourceCategory resourceCategory;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @Valid
     private User user;
-
 
     // Callback methods for title and createdAt
     @PrePersist
@@ -43,4 +40,5 @@ public class ThreadPost {
             this.title = this.title.trim().toLowerCase();
         }
     }
+
 }

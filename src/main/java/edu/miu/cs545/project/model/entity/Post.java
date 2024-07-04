@@ -1,27 +1,27 @@
 package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
+import jakarta.validation.Valid;
 import lombok.Data;
-import lombok.Setter;
+import lombok.EqualsAndHashCode;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Data
-public class Post {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class Post extends BasicEntity {
 
     @Lob
     private String content;
 
     @ManyToOne
+    @Valid
     private ThreadPost threadPost;
 
     @ManyToOne
     @JoinColumn(name = "parent_post_id")
+    @Valid
     private Post parentPost;
 
     @Column(updatable = false, nullable = false)

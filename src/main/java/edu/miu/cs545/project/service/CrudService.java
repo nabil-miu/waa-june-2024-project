@@ -1,9 +1,12 @@
 package edu.miu.cs545.project.service;
 
+import edu.miu.cs545.project.model.entity.BasicEntity;
+
 import java.util.List;
 import java.util.Optional;
 
-public interface CrudService<T, ID> {
+public interface CrudService<T extends BasicEntity, ID> {
+
     List<T> getAll();
 
     Optional<T> getById(ID id);
@@ -15,4 +18,5 @@ public interface CrudService<T, ID> {
     void delete(ID id);
 
     boolean existsById(ID id);
+
 }
