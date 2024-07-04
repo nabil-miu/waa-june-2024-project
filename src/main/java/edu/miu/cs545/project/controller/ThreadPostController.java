@@ -33,8 +33,8 @@ public class ThreadPostController extends CrudController<ThreadPost, Long> {
     public Page<ThreadPost> getAllThreadPagination(@RequestParam(value = "page", required = false) Integer page,
                                                    @RequestParam(value = "size", required = false) Integer size,
                                                    @RequestParam(defaultValue = "asc") String sortDirection) {
-        if (null == page) page = 0;
-        if (null == size) size = 10;
+        if (page == null) page = 0;
+        if (size == null) size = 10;
         return threadPostService.findAllThread(page, size, sortDirection);
     }
 }

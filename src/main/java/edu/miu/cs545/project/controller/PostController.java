@@ -61,8 +61,8 @@ public class PostController extends CrudController<Post, Long> {
     public Page<Post> getAllPostPagination(@RequestParam(value = "page", required = false) Integer page,
                                            @RequestParam(value = "size", required = false) Integer size,
                                            @RequestParam(defaultValue = "asc") String sortDirection) {
-        if (null == page) page = 0;
-        if (null == size) size = 10;
+        if (page == null) page = 0;
+        if (size == null) size = 10;
         return postService.findAllPost(page, size, sortDirection);
     }
 
