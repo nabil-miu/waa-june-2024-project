@@ -20,15 +20,11 @@ import java.util.Optional;
 
 @Service
 public class StudentDirectoryServiceImpl extends CrudServiceImpl<StudentDirectory, Long> implements StudentDirectoryService {
-
-
     @PersistenceContext
     private EntityManager em;
 
     public StudentDirectoryServiceImpl(StudentDirectoryRepo repository) {
-
         super(repository);
-
     }
 
     public List<StudentDirectory> findByAcademicYearAndMajorAndOtherFilters(LocalDate academicYear, String major, String otherFilter) {

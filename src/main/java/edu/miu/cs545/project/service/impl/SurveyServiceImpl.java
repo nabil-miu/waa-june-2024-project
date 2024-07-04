@@ -12,15 +12,11 @@ import java.util.List;
 
 @Service
 public class SurveyServiceImpl extends CrudServiceImpl<Survey,Long> implements SurveyService {
-
     private final SurveyRepo surveyRepo;
-
     public SurveyServiceImpl(SurveyRepo repository) {
-
         super(repository);
         this.surveyRepo = repository;
     }
-
     public List<Survey> getAllActiveSurveys() {
         LocalDate date = LocalDate.now();
         return surveyRepo.findByExpiredAtAfter(date);
