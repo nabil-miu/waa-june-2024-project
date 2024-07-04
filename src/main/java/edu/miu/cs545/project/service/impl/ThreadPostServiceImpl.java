@@ -39,4 +39,17 @@ public class ThreadPostServiceImpl extends CrudServiceImpl<ThreadPost, Long> imp
         }
         throw new RuntimeException("No data found");
     }
+
+    @Override
+    public Page<ThreadPost> findAllThread(Integer page, Integer size, String sortDirection) {
+        try {
+            Sort sort = Sort.by("id");
+            sort = sortDirection.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+            Pageable pageable = PageRequest.of(page, size, sort);
+            return threadPostRepository.findAll(pageable);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Some thing happened in the server.");
+        }
+    }
 }

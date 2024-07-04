@@ -10,7 +10,10 @@ import java.util.List;
 
 
 @Repository
-public interface ThreadPostRepository extends JpaRepository<ThreadPost,Long>{
-  List<ThreadPost> findThreadPostsByTitleLike(String threadTitle);
-  Page<ThreadPost> findThreadPostByResourceCategory(ResourceCategory resourceCategory, Pageable pageable);
+public interface ThreadPostRepository extends JpaRepository<ThreadPost, Long> {
+    List<ThreadPost> findThreadPostsByTitleLike(String threadTitle);
+
+    Page<ThreadPost> findAll(Pageable pageable);
+
+    Page<ThreadPost> findThreadPostByResourceCategory(ResourceCategory resourceCategory, Pageable pageable);
 }
