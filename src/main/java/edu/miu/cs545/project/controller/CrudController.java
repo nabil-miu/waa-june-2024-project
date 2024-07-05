@@ -54,7 +54,6 @@ public abstract class CrudController<T extends BasicEntity, ID> {
     @GetMapping("/all")
     public ResponseEntity<List<T>> getAll() throws NoSuchMethodException {
         counterGetAll.increment();
-        //callLogger(CLAZZ, getClass().getMethod(GET_ALL, null));
         List<T> entities = crudService.getAll();
         return ResponseEntity.ok().body(entities);
     }
@@ -63,7 +62,6 @@ public abstract class CrudController<T extends BasicEntity, ID> {
     @GetMapping("/{id}")
     public ResponseEntity<T> getById(@PathVariable ID id) throws NoSuchMethodException {
         counterGetById.increment();
-        //callLogger(CLAZZ, getClass().getMethod(GET_BY_ID, Long.class));
         Optional<T> optionalEntity = crudService.getById(id);
         return optionalEntity.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -73,7 +71,6 @@ public abstract class CrudController<T extends BasicEntity, ID> {
     @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody T entity) throws NoSuchMethodException {
         counterCreate.increment();
-        //callLogger(CLAZZ, getClass().getMethod(CREATE, Object.class));
         crudService.create(entity);
         URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
                 .path("/{id}")
@@ -86,7 +83,6 @@ public abstract class CrudController<T extends BasicEntity, ID> {
     @PutMapping("/{id}")
     public ResponseEntity<T> update(@PathVariable ID id, @Valid @RequestBody T entity) throws NoSuchMethodException {
         counterUpdate.increment();
-        //callLogger(CLAZZ, getClass().getMethod(UPDATE, Long.class, Object.class));
         T newEntity = crudService.update(id, entity);
         return ResponseEntity.ok(newEntity);
     }
@@ -95,7 +91,6 @@ public abstract class CrudController<T extends BasicEntity, ID> {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable ID id) throws NoSuchMethodException {
         counterDelete.increment();
-        //callLogger(CLAZZ, getClass().getMethod(DELETE, Long.class));
         if (!crudService.existsById(id)) {
             logger.error("Not found {}", id);
             return ResponseEntity.notFound().build();
@@ -113,8 +108,4 @@ public abstract class CrudController<T extends BasicEntity, ID> {
         }
     }
 
-//    private void callLogger(String className, Method method) {
-//        logger.debug("Logging message within class: {}, method: {}", className,
-//                method.getName());
-//    }
 }
