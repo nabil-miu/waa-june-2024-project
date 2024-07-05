@@ -26,7 +26,7 @@ public class AcademicResource extends BasicEntity{
     @Valid
     private Student student;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     @Valid
     private ResourceCategory resourceCategory;

@@ -5,6 +5,7 @@ import edu.miu.cs545.project.repository.GenericRepo;
 import edu.miu.cs545.project.service.CrudService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,5 +47,18 @@ public abstract class CrudServiceImpl<T extends BasicEntity, ID> implements Crud
     @Override
     public boolean existsById(ID id) {
         return repository.existsById(id);
+    }
+
+    @Transactional
+    @Override
+    public void softDelete(ID id) {
+        Optional<T> optionalT = repository.findById(id);
+        if (optionalT.isPresent()) {
+            T resource = optionalT.get();
+            resource.softDelete();
+            repository.save(resource);
+        } else {
+            throw new RuntimeException("AcademicResource not found with id: " + id);
+        }
     }
 }

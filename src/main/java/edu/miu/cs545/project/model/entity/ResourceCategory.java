@@ -21,7 +21,7 @@ public class ResourceCategory extends BasicEntity {
     @Nullable
     private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonBackReference
     @JoinColumn(name = "parent_id")
     @Nullable

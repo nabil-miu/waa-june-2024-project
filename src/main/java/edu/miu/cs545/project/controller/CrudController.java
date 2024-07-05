@@ -54,7 +54,7 @@ public abstract class CrudController<T extends BasicEntity, ID> {
             System.out.println("Not found");
             return ResponseEntity.notFound().build();
         }
-        crudService.delete(id);
+        crudService.softDelete(id);
         return ResponseEntity.noContent().build();
     }
 

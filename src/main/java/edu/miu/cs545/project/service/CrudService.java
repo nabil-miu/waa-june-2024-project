@@ -19,4 +19,5 @@ public interface CrudService<T extends BasicEntity, ID> {
 
     boolean existsById(ID id);
 
+    void softDelete(ID id);
 }

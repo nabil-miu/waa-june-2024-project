@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,46 +34,55 @@ public class Student extends User {
     @JsonBackReference
     @ManyToMany
     @Valid
+    @Where(clause = "deleted = false")
     private List<Interest> interests;
 
     @JsonBackReference
     @ManyToMany
     @Valid
+    @Where(clause = "deleted = false")
     private List<Event> events;
 
     @JsonBackReference
     @ManyToMany
     @Valid
+    @Where(clause = "deleted = false")
     private List<ExtracurricularActivity> activities;
 
     @JsonBackReference
     @OneToMany(mappedBy = "student")
     @Valid
+    @Where(clause = "deleted = false")
     private List<SurveyResponse> responses;
 
     @JsonBackReference
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     @Valid
+    @Where(clause = "deleted = false")
     private StudentDirectory studentDirectory;
 
     @JsonBackReference
     @OneToOne
     @Valid
+    @Where(clause = "deleted = false")
     private Profile profile;
 
     @JsonBackReference
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @Valid
+    @Where(clause = "deleted = false")
     private List<AcademicResource> academicResources;
 
     @JsonBackReference
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @Valid
+    @Where(clause = "deleted = false")
     private List<Rsvp> rsvpList;
 
     @JsonBackReference
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @Valid
+    @Where(clause = "deleted = false")
     private List<Attendance> attendances;
 
 }
