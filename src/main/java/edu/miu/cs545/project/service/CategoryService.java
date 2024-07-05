@@ -1,6 +1,11 @@
 package edu.miu.cs545.project.service;
 
-import edu.miu.cs545.project.model.entity.Category;
+import edu.miu.cs545.project.model.entity.ResourceCategory;
 
-public interface CategoryService extends CrudService<Category, Long>{
+import java.util.List;
+
+public interface CategoryService extends CrudService<ResourceCategory, Long> {
+
+    List<ResourceCategory> getRootCategoriesWithSubcategories();
+
 }

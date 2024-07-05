@@ -1,6 +1,9 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.model.entity.BasicEntity;
 import edu.miu.cs545.project.service.CrudService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
@@ -14,7 +17,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class CrudController<T, ID> {
+@RestController
+@RequiredArgsConstructor
+public abstract class CrudController<T extends BasicEntity, ID> {
 
     private final String GET_ALL = "getAll";
     private final String GET_BY_ID = "getById";
@@ -62,7 +67,7 @@ public abstract class CrudController<T, ID> {
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody T entity) throws NoSuchMethodException {
+    public ResponseEntity<Void> create(@Valid @RequestBody T entity) throws NoSuchMethodException {
         counterCreate.increment();
         callLogger(CLAZZ, getClass().getMethod(CREATE, Object.class));
         crudService.create(entity);
@@ -74,11 +79,11 @@ public abstract class CrudController<T, ID> {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<T> update(@PathVariable ID id, @RequestBody T entity) throws NoSuchMethodException {
+    public ResponseEntity<T> update(@PathVariable ID id, @Valid @RequestBody T entity) throws NoSuchMethodException {
         counterUpdate.increment();
         callLogger(CLAZZ, getClass().getMethod(UPDATE, Long.class, Object.class));
-        crudService.update(id, entity);
-        return ResponseEntity.ok(entity);
+        T newEntity = crudService.update(id, entity);
+        return ResponseEntity.ok(newEntity);
     }
 
     @DeleteMapping("/{id}")

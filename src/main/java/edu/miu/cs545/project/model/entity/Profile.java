@@ -1,21 +1,20 @@
 package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.Valid;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
-public class Profile {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private Long Id;
+public class Profile extends BasicEntity {
+
     @OneToOne(mappedBy = "profile")
-    private User user;
+    @Valid
+    private Student student;
     private String academicAchievements;
     @Lob
     private String personalBio;
+
 }

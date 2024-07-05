@@ -1,23 +1,24 @@
 package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
-public class ExtracurricularActivity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private Long id;
+public class ExtracurricularActivity extends BasicEntity {
+
+    @NotBlank(message = "Activity name can't be left empty")
     private String name;
     @ManyToMany(mappedBy = "activities")
-    private List<User> users;
+    @Valid
+    private List<Student> students;
     @Lob
     private String description;
+
 }

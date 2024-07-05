@@ -1,16 +1,19 @@
 package edu.miu.cs545.project.service.impl;
 
+import edu.miu.cs545.project.model.entity.BasicEntity;
+import edu.miu.cs545.project.repository.GenericRepo;
 import edu.miu.cs545.project.service.CrudService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @RequiredArgsConstructor
-public abstract class CrudServiceImpl<T, ID> implements CrudService<T, ID> {
+public abstract class CrudServiceImpl<T extends BasicEntity, ID> implements CrudService<T, ID> {
 
-    private final ListCrudRepository<T, ID> repository;
+    private final GenericRepo<T, ID> repository;
 
     @Override
     public List<T> getAll() {
