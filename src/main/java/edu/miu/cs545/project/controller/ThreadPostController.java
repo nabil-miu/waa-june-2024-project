@@ -2,6 +2,7 @@ package edu.miu.cs545.project.controller;
 
 import edu.miu.cs545.project.model.entity.ThreadPost;
 import edu.miu.cs545.project.service.ThreadPostService;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +14,8 @@ public class ThreadPostController extends CrudController<ThreadPost, Long> {
 
     private final ThreadPostService threadPostService;
 
-    public ThreadPostController(ThreadPostService threadPostService) {
-        super(threadPostService);
+    public ThreadPostController(ThreadPostService threadPostService, MeterRegistry registry) {
+        super(threadPostService, registry);
         this.threadPostService = threadPostService;
     }
 

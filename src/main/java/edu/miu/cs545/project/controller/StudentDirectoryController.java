@@ -2,6 +2,7 @@ package edu.miu.cs545.project.controller;
 
 import edu.miu.cs545.project.model.entity.StudentDirectory;
 import edu.miu.cs545.project.service.StudentDirectoryService;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,8 +18,8 @@ import java.util.List;
 @Tag(name = "Students Directory", description = "Students Directory API")
 public class StudentDirectoryController extends CrudController<StudentDirectory, Long> {
     private final StudentDirectoryService studentDirectoryService;
-    public StudentDirectoryController(StudentDirectoryService service) {
-        super(service);
+    public StudentDirectoryController(StudentDirectoryService service, MeterRegistry registry) {
+        super(service, registry);
         this.studentDirectoryService = service;
     }
 

@@ -2,6 +2,7 @@ package edu.miu.cs545.project.controller;
 
 import edu.miu.cs545.project.model.entity.SurveyResponse;
 import edu.miu.cs545.project.service.SurveyResponseService;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SurveyResponseController extends CrudController<SurveyResponse,Long>{
 
 
-    public SurveyResponseController(SurveyResponseService crudService) {
-        super(crudService);
+    public SurveyResponseController(SurveyResponseService crudService, MeterRegistry registry) {
+        super(crudService, registry);
     }
 }

@@ -2,6 +2,7 @@ package edu.miu.cs545.project.controller;
 
 import edu.miu.cs545.project.model.entity.Rsvp;
 import edu.miu.cs545.project.service.RsvpService;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,8 @@ public class RsvpController extends CrudController<Rsvp, Long> {
 
     private final RsvpService service;
 
-    public RsvpController(RsvpService service) {
-        super(service);
+    public RsvpController(RsvpService service, MeterRegistry registry) {
+        super(service, registry);
         this.service = service;
     }
 

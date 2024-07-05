@@ -2,6 +2,7 @@ package edu.miu.cs545.project.controller;
 
 import edu.miu.cs545.project.model.entity.ResourceCategory;
 import edu.miu.cs545.project.service.CategoryService;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +17,8 @@ public class CategoryController extends CrudController<ResourceCategory, Long> {
 
     private final CategoryService categoryService;
 
-    public CategoryController(CategoryService categoryService) {
-        super(categoryService);
+    public CategoryController(CategoryService categoryService, MeterRegistry registry) {
+        super(categoryService, registry);
         this.categoryService = categoryService;
     }
 

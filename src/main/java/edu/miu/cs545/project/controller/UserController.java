@@ -5,6 +5,7 @@ import edu.miu.cs545.project.model.entity.User;
 import edu.miu.cs545.project.service.BlockService;
 import edu.miu.cs545.project.service.ModerationService;
 import edu.miu.cs545.project.service.UserService;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,8 @@ public class UserController extends CrudController<User, Long> {
     private final ModerationService moderationService;
     private final BlockService blockService;
 
-    public UserController(UserService userService, ModerationService moderationService, BlockService blockService) {
-        super(userService);
+    public UserController(UserService userService, ModerationService moderationService, BlockService blockService, MeterRegistry registry) {
+        super(userService, registry);
         this.userService = userService;
         this.moderationService = moderationService;
         this.blockService = blockService;

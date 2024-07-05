@@ -2,6 +2,7 @@ package edu.miu.cs545.project.controller;
 
 import edu.miu.cs545.project.model.entity.AcademicResource;
 import edu.miu.cs545.project.service.AcademicResourceService;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,8 @@ public class AcademicResourceController extends CrudController<AcademicResource,
 
     private final AcademicResourceService service;
 
-    public AcademicResourceController(AcademicResourceService service) {
-        super(service);
+    public AcademicResourceController(AcademicResourceService service, MeterRegistry registry) {
+        super(service, registry);
         this.service = service;
     }
 

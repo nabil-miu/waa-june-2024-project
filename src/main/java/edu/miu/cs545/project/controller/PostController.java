@@ -7,6 +7,7 @@ import edu.miu.cs545.project.service.BlockService;
 import edu.miu.cs545.project.service.ModerationService;
 import edu.miu.cs545.project.service.PostService;
 import edu.miu.cs545.project.service.UserService;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,8 +32,9 @@ public class PostController extends CrudController<Post, Long> {
     private final UserService userService;
     private final BlockService blockService;
 
-    public PostController(ModerationService moderationService, PostService postService, UserService userService, BlockService blockService) {
-        super(postService);
+    public PostController(ModerationService moderationService, PostService postService, UserService userService,
+                          BlockService blockService, MeterRegistry registry) {
+        super(postService, registry);
         this.moderationService = moderationService;
         this.postService = postService;
         this.userService = userService;
