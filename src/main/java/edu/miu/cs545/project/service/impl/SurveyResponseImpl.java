@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SurveyResponseImpl extends CrudServiceImpl<SurveyResponse,Long> implements SurveyResponseService {
-
     public SurveyResponseImpl(SurveyResponseRepo repository) {
         super(repository);
     }

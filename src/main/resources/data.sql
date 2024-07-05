@@ -36,7 +36,7 @@ VALUES (1, '2023-07-01 18:00:00', 'Conference Hall A, Springfield University', '
         'A perfect place for students and professionals to meet potential employers.');
 
 INSERT INTO project.survey (created_at, expired_at, is_active, id, description, title)
-VALUES ('2023-06-30','2023-06-30', true, 1, 'A survey to understand student satisfaction with campus facilities.',
+VALUES ('2023-06-30','2023-06-30', false, 1, 'A survey to understand student satisfaction with campus facilities.',
         'Campus Satisfaction Survey 2023'),
        ('2023-07-01','2025-06-30', true, 2, 'A survey to gather feedback on the recent Tech Talk event.',
         'Tech Talk Feedback 2023');
