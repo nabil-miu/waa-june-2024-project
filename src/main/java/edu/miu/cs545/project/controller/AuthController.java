@@ -1,6 +1,7 @@
 package edu.miu.cs545.project.controller;
 
 import com.auth0.json.mgmt.users.User;
+import edu.miu.cs545.project.aop.LogExecutionTime;
 import edu.miu.cs545.project.dto.ChangePasswordRequestDto;
 import edu.miu.cs545.project.dto.LoginRequestDto;
 import edu.miu.cs545.project.dto.LoginResponseDto;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final AuthService authService;
 
+    @LogExecutionTime
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequest) {
         try {
@@ -34,6 +36,7 @@ public class AuthController {
         }
     }
 
+    @LogExecutionTime
     @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequestDto changePasswordRequest) {
         try {
@@ -45,6 +48,7 @@ public class AuthController {
         }
     }
 
+    @LogExecutionTime
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequestDto registerRequest) {
         try {

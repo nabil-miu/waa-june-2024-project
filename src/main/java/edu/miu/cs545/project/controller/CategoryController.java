@@ -1,5 +1,6 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.aop.LogExecutionTime;
 import edu.miu.cs545.project.model.entity.ResourceCategory;
 import edu.miu.cs545.project.service.CategoryService;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -22,6 +23,7 @@ public class CategoryController extends CrudController<ResourceCategory, Long> {
         this.categoryService = categoryService;
     }
 
+    @LogExecutionTime
     @GetMapping("/root")
     public List<ResourceCategory> getRootCategoriesWithSubcategories() {
         return categoryService.getRootCategoriesWithSubcategories();

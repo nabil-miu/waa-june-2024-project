@@ -1,5 +1,6 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.aop.LogExecutionTime;
 import edu.miu.cs545.project.service.StorageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class FileUploadController {
 
     // Loads the resource (if it exists) and sends it to the browser to download
     @GetMapping("/files/{filename:.+}")
+    @LogExecutionTime
     public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
 
         Resource file = storageService.loadAsResource(filename);
@@ -33,6 +35,7 @@ public class FileUploadController {
                 "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
+    @LogExecutionTime
     @PostMapping
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes, @RequestParam Long userId) {
@@ -44,6 +47,7 @@ public class FileUploadController {
         return "redirect:/";
     }
 
+    @LogExecutionTime
     @DeleteMapping("/files/{filename:.+}")
     public ResponseEntity<Void> delete(@PathVariable String filename) throws IOException {
         storageService.delete(filename);

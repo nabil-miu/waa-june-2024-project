@@ -1,5 +1,6 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.aop.LogExecutionTime;
 import edu.miu.cs545.project.model.entity.BasicEntity;
 import edu.miu.cs545.project.service.CrudService;
 import jakarta.validation.Valid;
@@ -49,27 +50,30 @@ public abstract class CrudController<T extends BasicEntity, ID> {
         this.counterDelete = registry.counter(CLAZZ, METHOD, DELETE);
     }
 
+    @LogExecutionTime
     @GetMapping("/all")
     public ResponseEntity<List<T>> getAll() throws NoSuchMethodException {
         counterGetAll.increment();
-        callLogger(CLAZZ, getClass().getMethod(GET_ALL, null));
+        //callLogger(CLAZZ, getClass().getMethod(GET_ALL, null));
         List<T> entities = crudService.getAll();
         return ResponseEntity.ok().body(entities);
     }
 
+    @LogExecutionTime
     @GetMapping("/{id}")
     public ResponseEntity<T> getById(@PathVariable ID id) throws NoSuchMethodException {
         counterGetById.increment();
-        callLogger(CLAZZ, getClass().getMethod(GET_BY_ID, Long.class));
+        //callLogger(CLAZZ, getClass().getMethod(GET_BY_ID, Long.class));
         Optional<T> optionalEntity = crudService.getById(id);
         return optionalEntity.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @LogExecutionTime
     @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody T entity) throws NoSuchMethodException {
         counterCreate.increment();
-        callLogger(CLAZZ, getClass().getMethod(CREATE, Object.class));
+        //callLogger(CLAZZ, getClass().getMethod(CREATE, Object.class));
         crudService.create(entity);
         URI location = ServletUriComponentsBuilder.fromCurrentRequestUri()
                 .path("/{id}")
@@ -78,20 +82,22 @@ public abstract class CrudController<T extends BasicEntity, ID> {
         return ResponseEntity.created(location).build();
     }
 
+    @LogExecutionTime
     @PutMapping("/{id}")
     public ResponseEntity<T> update(@PathVariable ID id, @Valid @RequestBody T entity) throws NoSuchMethodException {
         counterUpdate.increment();
-        callLogger(CLAZZ, getClass().getMethod(UPDATE, Long.class, Object.class));
+        //callLogger(CLAZZ, getClass().getMethod(UPDATE, Long.class, Object.class));
         T newEntity = crudService.update(id, entity);
         return ResponseEntity.ok(newEntity);
     }
 
+    @LogExecutionTime
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable ID id) throws NoSuchMethodException {
         counterDelete.increment();
-        callLogger(CLAZZ, getClass().getMethod(DELETE, Long.class));
+        //callLogger(CLAZZ, getClass().getMethod(DELETE, Long.class));
         if (!crudService.existsById(id)) {
-            logger.debug("Not found");
+            logger.error("Not found {}", id);
             return ResponseEntity.notFound().build();
         }
         crudService.softDelete(id);
@@ -107,8 +113,8 @@ public abstract class CrudController<T extends BasicEntity, ID> {
         }
     }
 
-    private void callLogger(String className, Method method) {
-        logger.debug("Logging message within class: {}, method: {}", className,
-                method.getName());
-    }
+//    private void callLogger(String className, Method method) {
+//        logger.debug("Logging message within class: {}, method: {}", className,
+//                method.getName());
+//    }
 }

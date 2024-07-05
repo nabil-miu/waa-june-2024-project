@@ -1,5 +1,6 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.aop.LogExecutionTime;
 import edu.miu.cs545.project.model.entity.StudentDirectory;
 import edu.miu.cs545.project.service.StudentDirectoryService;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -23,6 +24,7 @@ public class StudentDirectoryController extends CrudController<StudentDirectory,
         this.studentDirectoryService = service;
     }
 
+    @LogExecutionTime
     @GetMapping("/search")
     public ResponseEntity<List<StudentDirectory>> searchByLastName(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate academicyear,
                                                                    @RequestParam(required = false) String major,
@@ -31,6 +33,8 @@ public class StudentDirectoryController extends CrudController<StudentDirectory,
         List<StudentDirectory> students = studentDirectoryService.findByAcademicYearAndMajorAndOtherFilters(academicyear,major,text);
         return ResponseEntity.ok().body(students);
     }
+
+    @LogExecutionTime
     @GetMapping("/pages/{page}")
     public ResponseEntity<Page<StudentDirectory>> getPage(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
         if (size == null) {
@@ -43,4 +47,5 @@ public class StudentDirectoryController extends CrudController<StudentDirectory,
         Page<StudentDirectory> studentDirectoriesPage = studentDirectoryService.getStudentDirectoryByPage(page, size);
         return ResponseEntity.ok().body(studentDirectoriesPage);
     }
+
 }
