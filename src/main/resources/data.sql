@@ -12,7 +12,7 @@ VALUES (100, 'Bachelor of Science in Computer Science',
 INSERT INTO project.user (id, academic_year, account_non_expired, account_non_locked, credentials_non_expired, active,
                           profile_id,
                           address, city, country, department, email, first_name, last_name,
-                          major, password, phone, role, state, student_id, zip, user_type, false)
+                          major, password, phone, role, state, student_id, zip, user_type, deleted)
 VALUES (1, '2023-09-01', 1, 1, 1, 1, 100, '123 Oak St.', 'Springfield', 'USA', 'Computer Science',
         'john.doe@example.com',
         'John', 'Doe',
