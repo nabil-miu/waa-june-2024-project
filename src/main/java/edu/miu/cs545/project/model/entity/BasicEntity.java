@@ -24,4 +24,8 @@ public class BasicEntity {
 
     private boolean deleted = false;
 
+    public void softDelete() {
+        this.deleted = true;
+    }
+
 }
