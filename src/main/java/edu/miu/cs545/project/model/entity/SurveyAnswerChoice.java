@@ -7,7 +7,6 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-
 public class SurveyAnswerChoice extends BasicEntity {
 
     private Character choice;
