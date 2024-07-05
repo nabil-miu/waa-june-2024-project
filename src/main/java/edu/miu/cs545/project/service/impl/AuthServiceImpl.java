@@ -9,10 +9,13 @@ import edu.miu.cs545.project.service.AuthService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AuthServiceImpl implements AuthService {
     private final AuthAPI authAPI;
     private final ManagementAPI managementAPI;
+
     public AuthServiceImpl(@Value("${okta.oauth2.issuer}") String domain,
                            @Value("${okta.oauth2.client-id}") String clientId,
                            @Value("${okta.oauth2.client-secret}") String clientSecret,
@@ -22,9 +25,14 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void changePassword(String userId, String newPassword) {
+    public void changePassword(String email, String newPassword) {
         try {
-            User user = managementAPI.users().get(userId, null).execute();
+            // Retrieve user by email
+            List<User> users = managementAPI.users().listByEmail(email, null).execute();
+            if (users.isEmpty()) {
+                throw new RuntimeException("User not found");
+            }
+            User user = users.get(0);
             User userToUpdate = new User();
             userToUpdate.setPassword(newPassword.toCharArray());
             managementAPI.users().update(user.getId(), userToUpdate).execute();
