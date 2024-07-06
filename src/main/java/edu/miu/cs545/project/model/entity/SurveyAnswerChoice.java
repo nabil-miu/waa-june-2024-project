@@ -8,11 +8,8 @@ import lombok.Setter;
 
 @Entity
 @Data
-public class SurveyAnswerChoice {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private Long id;
+public class SurveyAnswerChoice extends BasicEntity{
+
     private Character choice;
     private String description;
     @ManyToOne

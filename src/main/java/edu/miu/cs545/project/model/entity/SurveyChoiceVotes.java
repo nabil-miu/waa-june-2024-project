@@ -2,13 +2,13 @@ package edu.miu.cs545.project.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Data
 @Entity
-public class SurveyChoiceVotes {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class SurveyChoiceVotes extends BasicEntity {
+
     private String choiceDescription;
     private int voteCount;
 
