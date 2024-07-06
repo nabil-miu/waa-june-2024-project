@@ -1,5 +1,6 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.aop.LogExecutionTime;
 import edu.miu.cs545.project.model.entity.AcademicResource;
 import edu.miu.cs545.project.service.AcademicResourceService;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -24,6 +25,7 @@ public class AcademicResourceController extends CrudController<AcademicResource,
         this.service = service;
     }
 
+    @LogExecutionTime
     @GetMapping("/category/{id}")
     public ResponseEntity<List<AcademicResource>> getResourcesByCategory(@PathVariable Long id) {
         List<AcademicResource> resources = service.getResourcesByCategoryId(id);

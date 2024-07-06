@@ -1,5 +1,6 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.aop.LogExecutionTime;
 import edu.miu.cs545.project.dto.ReportRequestDto;
 import edu.miu.cs545.project.model.entity.Post;
 import edu.miu.cs545.project.model.entity.User;
@@ -41,6 +42,7 @@ public class PostController extends CrudController<Post, Long> {
         this.blockService = blockService;
     }
 
+    @LogExecutionTime
     @PostMapping("/{postId}/report")
     public ResponseEntity<String> reportPost(@PathVariable Long postId, @RequestBody ReportRequestDto reportRequest) {
         Optional<User> reporter = userService.getById(reportRequest.getReporterId());
@@ -50,6 +52,7 @@ public class PostController extends CrudController<Post, Long> {
         return ResponseEntity.ok("Post reported successfully");
     }
 
+    @LogExecutionTime
     @GetMapping("/all/{userId}")
     public ResponseEntity<List<Post>> getAllByUserId(@PathVariable Long userId) {
         User user = userService.getById(userId).orElse(null);
@@ -58,7 +61,7 @@ public class PostController extends CrudController<Post, Long> {
         return ResponseEntity.ok(posts);
     }
 
-
+    @LogExecutionTime
     @GetMapping("/pagination")
     public Page<Post> getAllPostPagination(@RequestParam(value = "page", required = false) Integer page,
                                            @RequestParam(value = "size", required = false) Integer size,
@@ -68,7 +71,7 @@ public class PostController extends CrudController<Post, Long> {
         return postService.findAllPost(page, size, sortDirection);
     }
 
-
+    @LogExecutionTime
     @GetMapping("/thread-post")
     public Page<Post> getParentPostByThreadPost(@RequestParam(value = "id", required = true) Long id,
                                                 @RequestParam(value = "page", required = false) Integer page,
@@ -79,6 +82,7 @@ public class PostController extends CrudController<Post, Long> {
         return postService.findParentPostByThread(id, page, size, sortDirection);
     }
 
+    @LogExecutionTime
     @GetMapping("/parent-post")
     public Page<Post> getChildPostByParentPost(@RequestParam(value = "id", required = true) Long id,
                                                @RequestParam(value = "page", required = false) Integer page,
@@ -89,7 +93,7 @@ public class PostController extends CrudController<Post, Long> {
         return postService.findChildPostByParentPost(id, page, size, sortDirection);
     }
 
-
+    @LogExecutionTime
     @GetMapping("/search-posts")
     public Page<Post> getSearchPosts(
             @RequestParam(required = false) String postContent,
@@ -98,4 +102,5 @@ public class PostController extends CrudController<Post, Long> {
             Pageable pageable) {
         return postService.getSearchPosts(postContent, createdAt, updatedAt, pageable);
     }
+
 }

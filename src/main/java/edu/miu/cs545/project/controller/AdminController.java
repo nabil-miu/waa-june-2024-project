@@ -1,5 +1,6 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.aop.LogExecutionTime;
 import edu.miu.cs545.project.model.entity.Report;
 import edu.miu.cs545.project.service.AdminService;
 import edu.miu.cs545.project.service.ModerationService;
@@ -21,29 +22,34 @@ public class AdminController {
         this.moderationService = moderationService;
     }
 
+    @LogExecutionTime
     @PostMapping("/deactivate-user")
     public ResponseEntity<Void> deactivateUser(Long id) {
         adminService.deactivateUser(id);
         return ResponseEntity.ok().build();
     }
 
+    @LogExecutionTime
     @PostMapping("/activate-user")
     public ResponseEntity<Void> activateUser(Long id) {
         adminService.activateUser(id);
         return ResponseEntity.ok().build();
     }
 
+    @LogExecutionTime
     @GetMapping("/reports")
     public ResponseEntity<List<Report>> getReports() {
         List<Report> reports = moderationService.getAll();
         return ResponseEntity.ok(reports);
     }
 
+    @LogExecutionTime
     @GetMapping("/reports/{reportId}")
     public ResponseEntity<Report> getReport(@PathVariable Long reportId) {
         return ResponseEntity.ok(moderationService.getById(reportId).orElse(null));
     }
 
+    @LogExecutionTime
     @GetMapping("/reports-by-user/{userId}")
     public ResponseEntity<List<Report>> getReportByUser(@PathVariable Long userId) {
         return ResponseEntity.ok(moderationService.getReportsByUser(userId));

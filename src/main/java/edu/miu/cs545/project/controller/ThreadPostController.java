@@ -1,5 +1,6 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.aop.LogExecutionTime;
 import edu.miu.cs545.project.model.entity.ThreadPost;
 import edu.miu.cs545.project.service.ThreadPostService;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -19,6 +20,7 @@ public class ThreadPostController extends CrudController<ThreadPost, Long> {
         this.threadPostService = threadPostService;
     }
 
+    @LogExecutionTime
     @GetMapping("/category")
     public Page<ThreadPost> getThreadPostByCategory(@RequestParam(value = "id", required = true) Long id,
                                                     @RequestParam(value = "page", required = false) Integer page,
@@ -29,6 +31,7 @@ public class ThreadPostController extends CrudController<ThreadPost, Long> {
         return threadPostService.findThreadPostByCategory(id, page, size, sortDirection);
     }
 
+    @LogExecutionTime
     @GetMapping("/pagination")
     public Page<ThreadPost> getAllThreadPagination(@RequestParam(value = "page", required = false) Integer page,
                                                    @RequestParam(value = "size", required = false) Integer size,
@@ -37,4 +40,5 @@ public class ThreadPostController extends CrudController<ThreadPost, Long> {
         if (size == null) size = 10;
         return threadPostService.findAllThread(page, size, sortDirection);
     }
+
 }

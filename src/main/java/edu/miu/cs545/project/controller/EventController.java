@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Events", description = "Events API")
 public class EventController extends CrudController<Event, Long> {
 
-
     public EventController(EventService service, MeterRegistry registry) {
         super(service, registry);
     }
+
 }

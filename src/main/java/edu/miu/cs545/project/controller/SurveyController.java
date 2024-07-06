@@ -1,5 +1,6 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.aop.LogExecutionTime;
 import edu.miu.cs545.project.model.entity.Survey;
 import edu.miu.cs545.project.service.SurveyService;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -21,9 +22,12 @@ public class SurveyController extends CrudController<Survey, Long> {
         super(surveyService, registry);
         this.surveyService = surveyService;
     }
+
+    @LogExecutionTime
     @GetMapping("/active")
     public ResponseEntity<List<Survey>> getActiveSurveys() {
         List<Survey> surveys = surveyService.getAllActiveSurveys();
         return ResponseEntity.ok().body(surveys);
     }
+
 }

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Survey Responses", description = "Survey Response API")
 public class SurveyResponseController extends CrudController<SurveyResponse,Long>{
 
-
     public SurveyResponseController(SurveyResponseService crudService, MeterRegistry registry) {
         super(crudService, registry);
     }
+
 }

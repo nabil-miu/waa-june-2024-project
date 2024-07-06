@@ -15,4 +15,5 @@ public class InterestController extends CrudController<Interest, Long> {
     public InterestController(InterestService service, MeterRegistry registry) {
         super(service, registry);
     }
+
 }

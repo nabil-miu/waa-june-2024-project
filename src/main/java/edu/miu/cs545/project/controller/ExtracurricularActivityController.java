@@ -15,4 +15,5 @@ public class ExtracurricularActivityController extends CrudController<Extracurri
     public ExtracurricularActivityController(ExtracurricularActivityService service, MeterRegistry registry) {
         super(service, registry);
     }
+
 }

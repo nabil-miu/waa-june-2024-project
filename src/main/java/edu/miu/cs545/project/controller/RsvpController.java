@@ -1,5 +1,6 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.aop.LogExecutionTime;
 import edu.miu.cs545.project.model.entity.Rsvp;
 import edu.miu.cs545.project.service.RsvpService;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -24,9 +25,11 @@ public class RsvpController extends CrudController<Rsvp, Long> {
         this.service = service;
     }
 
+    @LogExecutionTime
     @GetMapping("/event")
     public ResponseEntity<List<Rsvp>> getAllRsvpsByEvent(@RequestParam Long eventId) {
         List<Rsvp> rsvpList = service.getAllRsvpsByEvent(eventId);
         return ResponseEntity.ok(rsvpList);
     }
+
 }

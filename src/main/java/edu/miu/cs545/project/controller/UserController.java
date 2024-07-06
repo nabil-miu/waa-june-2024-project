@@ -1,5 +1,6 @@
 package edu.miu.cs545.project.controller;
 
+import edu.miu.cs545.project.aop.LogExecutionTime;
 import edu.miu.cs545.project.dto.ReportRequestDto;
 import edu.miu.cs545.project.model.entity.User;
 import edu.miu.cs545.project.service.BlockService;
@@ -27,6 +28,7 @@ public class UserController extends CrudController<User, Long> {
         this.blockService = blockService;
     }
 
+    @LogExecutionTime
     @PostMapping("/{userId}/report")
     public ResponseEntity<String> reportUser(@PathVariable Long userId, @RequestBody ReportRequestDto reportRequest) {
         Optional<User> reporter = userService.getById(reportRequest.getReporterId());
@@ -35,6 +37,7 @@ public class UserController extends CrudController<User, Long> {
         return ResponseEntity.ok("User reported successfully");
     }
 
+    @LogExecutionTime
     @PostMapping("/{blockedId}/block")
     public ResponseEntity<String> blockUser(@PathVariable Long blockedId, @RequestBody User blocker) {
         Optional<User> blocked = userService.getById(blockedId);
@@ -42,10 +45,12 @@ public class UserController extends CrudController<User, Long> {
         return ResponseEntity.ok("User blocked successfully");
     }
 
+    @LogExecutionTime
     @PostMapping("/{blockedId}/unblock")
     public ResponseEntity<String> unblock(@PathVariable Long blockedId, @RequestBody User blocker) {
         Optional<User> blocked = userService.getById(blockedId);
         blockService.unblockUser(blocker, blocked.orElse(null));
         return ResponseEntity.ok("User unblocked successfully");
     }
+
 }
