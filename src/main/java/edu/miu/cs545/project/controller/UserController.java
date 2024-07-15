@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@CrossOrigin
 @Tag(name = "Users", description = "Users API")
 public class UserController extends CrudController<User, Long> {
     private final UserService userService;
