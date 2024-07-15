@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public abstract class CrudController<T extends BasicEntity, ID> {
 
     private final String GET_ALL = "getAll";
